@@ -3,19 +3,11 @@ import { promisify } from 'util';
 import path from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
-
-
 const config = fs.readJsonSync('./output/specs-generated.json');
 const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory)
-console.log('termsdir: ', termsdir);
-
-
 const appendFileAsync = promisify(appendFile);
-
 const googlesheet = readFileSync('./output/metadata.json', 'utf8');
 const googlesheetValues = JSON.parse(googlesheet).values;
-
-
 const ToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
 let allToIP_FkeyValues = [];
 let numberOfMissingMatches = 0;
@@ -24,10 +16,7 @@ console.log('ToIP_Fkey: ', ToIP_Fkey);
 googlesheetValues.forEach((row, index) => {
     if (index > 0) {
         const ToIP_FkeyValue = row[ToIP_Fkey];
-        // console.log('ToIP_FkeyValue: ', ToIP_FkeyValue);
         allToIP_FkeyValues.push(ToIP_FkeyValue);
-        // const fileName = ToIP_FkeyValue + '.md';
-        // console.log('fileName: ', fileName);
     }
 });
 
@@ -36,20 +25,18 @@ googlesheetValues.forEach((row, index) => {
 // Define a function to run on each file
 async function exampleFunction(filePath) {
     try {
-        await appendFileAsync(filePath, ' pipo');
+        const fileContent = readFileSync(filePath, 'utf8');
+        const newFilePath = path.join(termsdir, path.basename(filePath));
+        await appendFileAsync(newFilePath, fileContent + ' pipo');
+        console.log(`Successfully appended to file: ${newFilePath}`);
+
 
         // show only the file name
         const fileNameWithExt = filePath.split('/').pop();
         const fileName = fileNameWithExt.split('.')[0];
 
-
-        // console.log('fileName: ', fileName);
-        // allFiles.push(fileName);
-
         // test if file is in allToIP_FkeyValues
         const fileInToIP_FkeyValues = allToIP_FkeyValues.includes(fileName);
-        // console.log('fileInToIP_FkeyValues: ', fileInToIP_FkeyValues);
-        // if fileInToIP_FkeyValues is false, then increment numberOfMissingMatches
         if (!fileInToIP_FkeyValues) {
             numberOfMissingMatches++;
         }
