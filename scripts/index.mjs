@@ -48,11 +48,11 @@ async function convertFiles(filePath) {
 }
 
 // Call the processFilesInDirectory function
-const directoryPath = './specsource';
+const sourceDirectoryPath = './specsource';
 const fileExtension = '.md';
 
 (async () => {
-    await processFilesInDirectory(directoryPath, fileExtension, convertFiles);
+    await processFilesInDirectory(sourceDirectoryPath, fileExtension, convertFiles);
     console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
 })();
 
