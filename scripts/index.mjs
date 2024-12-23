@@ -53,6 +53,6 @@ const fileExtension = '.md';
 
 (async () => {
     await processFilesInDirectory(directoryPath, fileExtension, exampleFunction);
-    console.log(`Houston, we have ${numberOfMissingMatches} problems`);
+    console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
 })();
 
