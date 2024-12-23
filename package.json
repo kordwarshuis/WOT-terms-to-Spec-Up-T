@@ -3,10 +3,6 @@
   "description": "This is a tool to convert WOT terms to Spec-Up-T",
   "main": "./scripts/index.mjs",
   "license": "MIT",
-  "scripts": {
-    "analyse": "node ./scripts/index.mjs",
-    "fetchMeta": "node ./scripts/fetchGoogleSheetContent.mjs"
-  },
   "dependencies": {
     "dotenv": "^16.3.1",
     "fs-extra": "^11.2.0"
