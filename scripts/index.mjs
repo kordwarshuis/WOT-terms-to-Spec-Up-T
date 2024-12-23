@@ -23,7 +23,7 @@ googlesheetValues.forEach((row, index) => {
 
 // Example usage:
 // Define a function to run on each file
-async function exampleFunction(filePath) {
+async function convertFiles(filePath) {
     try {
         const fileContent = readFileSync(filePath, 'utf8');
         const newFilePath = path.join(termsdir, path.basename(filePath));
@@ -52,7 +52,7 @@ const directoryPath = './specsource';
 const fileExtension = '.md';
 
 (async () => {
-    await processFilesInDirectory(directoryPath, fileExtension, exampleFunction);
+    await processFilesInDirectory(directoryPath, fileExtension, convertFiles);
     console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
 })();
 
