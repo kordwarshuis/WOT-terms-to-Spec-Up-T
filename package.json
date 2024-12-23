@@ -1,0 +1,14 @@
+{
+  "name": "wottermstospecupt",
+  "description": "This is a tool to convert WOT terms to Spec-Up-T",
+  "version": "0.0.1",
+  "main": "./scripts/index.mjs",
+  "license": "MIT",
+  "scripts": {
+    "analyse": "node ./scripts/index.mjs",
+    "fetchMeta": "node ./scripts/fetchGoogleSheetContent.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}
