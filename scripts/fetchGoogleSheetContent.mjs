@@ -42,7 +42,6 @@ config();
 
 
 // CONFIG
-const outputPathMarkDown = process.env.TERMS_WOT_MANAGE_MARKDOWN;
 const outputDirJSON = process.env.TERMS_WOT_MANAGE_JSON_DIR_NAME;
 const outputFileNameJSON = process.env.TERMS_WOT_MANAGE_JSON_FILE_NAME;
 
