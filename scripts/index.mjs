@@ -1,11 +1,18 @@
-import { readFileSync } from 'fs';
-import { appendFile } from 'fs';
+import { readFileSync, appendFile } from 'fs';
 import { promisify } from 'util';
+import path from 'path';
+import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
+
+
+const config = fs.readJsonSync('./output/specs-generated.json');
+const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory)
+console.log('termsdir: ', termsdir);
+
 
 const appendFileAsync = promisify(appendFile);
 
-const googlesheet = readFileSync('./static/json/overview.json', 'utf8');
+const googlesheet = readFileSync('./output/metadata.json', 'utf8');
 const googlesheetValues = JSON.parse(googlesheet).values;
 
 
@@ -54,7 +61,7 @@ async function exampleFunction(filePath) {
 }
 
 // Call the processFilesInDirectory function
-const directoryPath = '../WOT-terms.wiki-copy';
+const directoryPath = './specsource';
 const fileExtension = '.md';
 
 (async () => {
