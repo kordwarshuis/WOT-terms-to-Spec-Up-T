@@ -48,10 +48,10 @@ async function convertFiles(filePath) {
 
         // show only the file name
         const fileNameWithExt = filePath.split('/').pop();
-        const fileName = fileNameWithExt.split('.')[0];
+        const fileNameWithoutExt = fileNameWithExt.split('.')[0];
 
         // test if file is in allToIP_FkeyValues
-        const fileInToIP_FkeyValues = allToIP_FkeyValues.includes(fileName);
+        const fileInToIP_FkeyValues = allToIP_FkeyValues.includes(fileNameWithoutExt);
 
 
         /* IF ( ToIP_Fkey matcht met een .md file in de TermsDir met exact dezelfde naam ) THEN
@@ -67,7 +67,7 @@ async function convertFiles(filePath) {
 
         } else {
 
-            console.log(`File not found in ToIP_Fkey: ${fileName}`);
+            console.log(`File not found in ToIP_Fkey: ${fileNameWithoutExt}`);
             numberOfMissingMatches++;
 
         }
