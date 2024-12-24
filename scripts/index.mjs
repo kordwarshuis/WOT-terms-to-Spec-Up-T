@@ -64,6 +64,22 @@ function main() {
 
         return aliasValue;
     }
+    function findTerm(fName) {
+        let term = '';
+
+        // Iterate over each row in googlesheetValues, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
+        googlesheetValues.forEach((row, index) => {
+            // Skip the header row
+            if (index > 0) {
+                // Check if the ToIP_Fkey column matches fName
+                if (row[indexOfToIP_Fkey] === fName) {
+                    term = row[indexOfTerm];
+                }
+            }
+        });
+
+        return term;
+    }
 
     function replaceInternalMarkdownLinks(fileContent) {
         // Regular expression to match internal markdown links
@@ -164,14 +180,16 @@ function main() {
                     */
 
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
-                    fileContent = `[[def: ${fileNameWithoutExt}]]\n` + fileContent;
+                    fileContent = `[[def: ${fileNameWithoutExt}, ${findTerm(fileNameWithoutExt)}]]\n` + fileContent;
                 } else {
                     /* 
                         anders [[def: term, alias]] (alias is de naam van de file zonder '-', door de '-' te vervangen door een spatie)
                     */
 
+                    let fileNameWithoutExtNoDash = fileNameWithoutExt.replace(/-/g, ' ');
+                    
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
-                    fileContent = `[[def: ${fileNameWithoutExt}]]\n` + fileContent;
+                    fileContent = `[[def: ${fileNameWithoutExt}, ${fileNameWithoutExtNoDash}]]\n` + fileContent;
                 }
 
                 // Conversion to Spec-Up-T: Ensure a newline after the '## See ' pattern
