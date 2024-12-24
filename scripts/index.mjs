@@ -76,19 +76,52 @@ function main() {
         return updatedContent;
     }
 
+    // // A: Remove only the heading but keep the content
+    // function removeMarkdownHeadings(markdown) {
+    //     return markdown
+    //         .split('\n') // Split the string into lines
+    //         .map(line => {
+    //             // Check if the line starts with '#' (indicating a heading)
+    //             if (/^#+\s/.test(line)) {
+    //                 // Remove the '#' symbols and treat it as a normal paragraph
+    //                 return line.replace(/^#+\s*/, '');
+    //             }
+    //             return line; // Keep other lines as-is
+    //         })
+    //         .join('\n'); // Join the lines back together
+    // }
+
+    // B: Remove the heading and the content
     function removeMarkdownHeadings(markdown) {
         return markdown
             .split('\n') // Split the string into lines
-            .map(line => {
+            .filter(line => {
                 // Check if the line starts with '#' (indicating a heading)
-                if (/^#+\s/.test(line)) {
-                    // Remove the '#' symbols and treat it as a normal paragraph
-                    return line.replace(/^#+\s*/, '');
-                }
-                return line; // Keep other lines as-is
+                return !/^#+\s/.test(line);
             })
             .join('\n'); // Join the lines back together
     }
+
+    function remoteEverythingAfterSecondHeading(fileContent) { 
+        const lines = fileContent.split('\n');
+        let headingCount = 0;
+        let result = [];
+
+        for (let line of lines) {
+            if (/^#+\s/.test(line)) {
+                headingCount++;
+                if (headingCount === 2) {
+                    break;
+                }
+            }
+            result.push(line);
+        }
+
+        const newContent = result.join('\n');
+        console.log('Content after the second heading has been removed.');
+        return newContent;
+    }
+
 
     // Example usage:
     // Define a function to run on each file
@@ -125,6 +158,9 @@ function main() {
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
                     fileContent = `[[def: ${fileNameWithoutExt}]]\n` + fileContent;
                 }
+
+                // Conversion to Spec-Up-T: Remove everything after the second heading
+                fileContent = remoteEverythingAfterSecondHeading(fileContent);
 
                 // Conversion to Spec-Up-T: Replace internal markdown links with the Spec-Up-T reference format
                 fileContent = replaceInternalMarkdownLinks(fileContent)
