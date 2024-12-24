@@ -15,14 +15,14 @@ const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_
 
 const appendFileAsync = promisify(appendFile);
 const googlesheetValues = JSON.parse(googlesheet).values;
-const ToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
-const alias = googlesheetValues[0].indexOf('Alias');
+const indexOfToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
+const indexOfAlias = googlesheetValues[0].indexOf('Alias');
 let allToIP_FkeyValues = [];
 let numberOfMissingMatches = 0;
 
 googlesheetValues.forEach((row, index) => {
     if (index > 0) {
-        const ToIP_FkeyValue = row[ToIP_Fkey];
+        const ToIP_FkeyValue = row[indexOfToIP_Fkey];
         allToIP_FkeyValues.push(ToIP_FkeyValue);
     }
 });
@@ -35,9 +35,9 @@ function isAliasTrue(fName) {
         // Skip the header row
         if (index > 0) {
             // Check if the ToIP_Fkey column matches fName
-            if (row[ToIP_Fkey] === fName) {
+            if (row[indexOfToIP_Fkey] === fName) {
                 // Check if the alias column is 'y'
-                if (row[alias] === 'y') {
+                if (row[indexOfAlias] === 'y') {
                     // Set aliasValue to true if both conditions are met
                     aliasValue = true;
                 }
