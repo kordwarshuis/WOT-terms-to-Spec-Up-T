@@ -27,6 +27,7 @@ googlesheetValues.forEach((row, index) => {
     }
 });
 
+function 
 
 function replaceInternalMarkdownLinks(fileContent) {
     // Regular expression to match internal markdown links
@@ -44,12 +45,6 @@ function replaceInternalMarkdownLinks(fileContent) {
 // Define a function to run on each file
 async function convertFiles(filePath) {
     try {
-        const fileContent = readFileSync(filePath, 'utf8');
-        const newFilePath = path.join(termsdir, path.basename(filePath));
-
-        // Replace internal markdown links with the Spec-Up-T reference format
-        await appendFileAsync(newFilePath, replaceInternalMarkdownLinks(fileContent));
-        console.log(`Successfully converted file: ${newFilePath}`);
 
         // show only the file name
         const fileNameWithExt = filePath.split('/').pop();
@@ -57,8 +52,24 @@ async function convertFiles(filePath) {
 
         // test if file is in allToIP_FkeyValues
         const fileInToIP_FkeyValues = allToIP_FkeyValues.includes(fileName);
-        if (!fileInToIP_FkeyValues) {
+
+
+        /* IF ( ToIP_Fkey matcht met een .md file in de TermsDir met exact dezelfde naam ) THEN
+	        File onder exact dezelfde naam wegschrijven naar directory TermsDirResult 
+        */
+        if (fileInToIP_FkeyValues) {
+            const fileContent = readFileSync(filePath, 'utf8');
+            const newFilePath = path.join(termsdir, path.basename(filePath));
+
+            // Replace internal markdown links with the Spec-Up-T reference format
+            await appendFileAsync(newFilePath, replaceInternalMarkdownLinks(fileContent));
+            // console.log(`Successfully converted file: ${newFilePath}`);
+
+        } else {
+
+            console.log(`File not found in ToIP_Fkey: ${fileName}`);
             numberOfMissingMatches++;
+
         }
 
         // console.log(`Successfully appended to file: ${filePath}`);
