@@ -77,19 +77,34 @@ async function convertFiles(filePath) {
 	        File onder exact dezelfde naam wegschrijven naar directory TermsDirResult 
         */
         if (fileInToIP_FkeyValues) {
-            const fileContent = readFileSync(filePath, 'utf8');
+            let fileContent = readFileSync(filePath, 'utf8');
             const newFilePath = path.join(termsdir, path.basename(filePath));
+            
             if (isAliasTrue(fileNameWithoutExt)) {
+                /*
+                    In de file zetten  [[def: term, alias]]  (term=de filenaam zonder .md. De Alias is die in het 'Term' field staat in de sheet)
+                */
                 console.log(fileNameWithoutExt, ": ", isAliasTrue(fileNameWithoutExt));
+                // prepend fileContent with [[def: term, alias]]
+                fileContent = `[[def: ${fileNameWithoutExt}]]\n` + fileContent;
+                
+                
+            } else {
+                /* 
+                    anders [[def: term, alias]] (alias is de naam van de file zonder '-', door de '-' te vervangen door een spatie)
+                */
+                fileContent = `[[def: ${fileNameWithoutExt}]]\n` + fileContent;
             }
+
+            fileContent = replaceInternalMarkdownLinks(fileContent)
+
             // Replace internal markdown links with the Spec-Up-T reference format
-            await appendFileAsync(newFilePath, replaceInternalMarkdownLinks(fileContent));
+            await appendFileAsync(newFilePath, fileContent);
             // console.log(`Successfully converted file: ${newFilePath}`);
 
         } else {
             console.log(`File not found in ToIP_Fkey: ${fileNameWithoutExt}`);
             numberOfMissingMatches++;
-
         }
 
         // console.log(`Successfully appended to file: ${filePath}`);
