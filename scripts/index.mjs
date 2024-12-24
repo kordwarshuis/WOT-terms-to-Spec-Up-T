@@ -46,6 +46,8 @@ async function convertFiles(filePath) {
     try {
         const fileContent = readFileSync(filePath, 'utf8');
         const newFilePath = path.join(termsdir, path.basename(filePath));
+
+        // Replace internal markdown links with the Spec-Up-T reference format
         await appendFileAsync(newFilePath, replaceInternalMarkdownLinks(fileContent));
         console.log(`Successfully appended to file: ${newFilePath}`);
 
