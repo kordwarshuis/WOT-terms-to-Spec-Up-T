@@ -121,9 +121,25 @@ function main() {
         return newContent;
     }
 
+    function ensureNewlineAfterPattern(fileContent) {
+        const pattern = '## See ';
+        const lines = fileContent.split('\n');
+        let result = [];
 
-    // Example usage:
-    // Define a function to run on each file
+        for (let line of lines) {
+            // if after pattern is more content, add a newline after the pattern
+            if (line.startsWith(pattern) && line.length > pattern.length) {
+                result.push(pattern);
+                result.push(line.slice(pattern.length));
+            } else {
+                result.push(line);
+            }
+        }
+
+        const newContent = result.join('\n');
+        return newContent;
+    }
+
     async function convertFiles(filePath) {
         try {
 
@@ -157,6 +173,9 @@ function main() {
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
                     fileContent = `[[def: ${fileNameWithoutExt}]]\n` + fileContent;
                 }
+
+                // Conversion to Spec-Up-T: Ensure a newline after the '## See ' pattern
+                fileContent = ensureNewlineAfterPattern(fileContent)
 
                 // Conversion to Spec-Up-T: Remove everything after the second heading
                 fileContent = removeEverythingAfterSecondHeading(fileContent);
