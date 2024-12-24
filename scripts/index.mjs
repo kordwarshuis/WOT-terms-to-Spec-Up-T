@@ -12,7 +12,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-rl.question('\n\n\n********************\nPlease enter the source directory path.\nThis can be a relative path (to this repo) or absolute, starting from root of file system):\n\n', (input) => {
+rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (input) => {
     sourceDirectoryPath = input;
     // console.log(`Source Directory Path: ${sourceDirectoryPath}`);
     rl.close();
