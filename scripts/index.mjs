@@ -49,8 +49,7 @@ async function convertFiles(filePath) {
 
         // Replace internal markdown links with the Spec-Up-T reference format
         await appendFileAsync(newFilePath, replaceInternalMarkdownLinks(fileContent));
-        console.log(`Successfully appended to file: ${newFilePath}`);
-
+        console.log(`Successfully converted file: ${newFilePath}`);
 
         // show only the file name
         const fileNameWithExt = filePath.split('/').pop();
