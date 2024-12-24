@@ -19,7 +19,6 @@ const ToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
 const alias = googlesheetValues[0].indexOf('Alias');
 let allToIP_FkeyValues = [];
 let numberOfMissingMatches = 0;
-console.log('ToIP_Fkey: ', ToIP_Fkey);
 
 googlesheetValues.forEach((row, index) => {
     if (index > 0) {
