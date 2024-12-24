@@ -200,6 +200,7 @@ function main() {
 
                 // Conversion to Spec-Up-T: Replace internal markdown links with the Spec-Up-T reference format
                 fileContent = replaceInternalMarkdownLinks(fileContent)
+                
                 // Conversion to Spec-Up-T: Remove markdown headings
                 fileContent = removeMarkdownHeadings(fileContent);
 
