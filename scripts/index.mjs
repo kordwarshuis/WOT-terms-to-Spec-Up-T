@@ -102,7 +102,7 @@ function main() {
             .join('\n'); // Join the lines back together
     }
 
-    function remoteEverythingAfterSecondHeading(fileContent) { 
+    function removeEverythingAfterSecondHeading(fileContent) { 
         const lines = fileContent.split('\n');
         let headingCount = 0;
         let result = [];
@@ -118,7 +118,6 @@ function main() {
         }
 
         const newContent = result.join('\n');
-        console.log('Content after the second heading has been removed.');
         return newContent;
     }
 
@@ -160,7 +159,7 @@ function main() {
                 }
 
                 // Conversion to Spec-Up-T: Remove everything after the second heading
-                fileContent = remoteEverythingAfterSecondHeading(fileContent);
+                fileContent = removeEverythingAfterSecondHeading(fileContent);
 
                 // Conversion to Spec-Up-T: Replace internal markdown links with the Spec-Up-T reference format
                 fileContent = replaceInternalMarkdownLinks(fileContent)
