@@ -16,6 +16,7 @@ const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_
 const appendFileAsync = promisify(appendFile);
 const googlesheetValues = JSON.parse(googlesheet).values;
 const ToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
+const alias = googlesheetValues[0].indexOf('Alias');
 let allToIP_FkeyValues = [];
 let numberOfMissingMatches = 0;
 console.log('ToIP_Fkey: ', ToIP_Fkey);
@@ -27,7 +28,26 @@ googlesheetValues.forEach((row, index) => {
     }
 });
 
-function 
+function isAliasTrue(fName) {
+    let aliasValue = false;
+
+    // Iterate over each row in googlesheetValues, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
+    googlesheetValues.forEach((row, index) => {
+        // Skip the header row
+        if (index > 0) {
+            // Check if the ToIP_Fkey column matches fName
+            if (row[ToIP_Fkey] === fName) {
+                // Check if the alias column is 'y'
+                if (row[alias] === 'y') {
+                    // Set aliasValue to true if both conditions are met
+                    aliasValue = true;
+                }
+            }
+        }
+    });
+
+    return aliasValue;
+}
 
 function replaceInternalMarkdownLinks(fileContent) {
     // Regular expression to match internal markdown links
@@ -60,13 +80,14 @@ async function convertFiles(filePath) {
         if (fileInToIP_FkeyValues) {
             const fileContent = readFileSync(filePath, 'utf8');
             const newFilePath = path.join(termsdir, path.basename(filePath));
-
+            if (isAliasTrue(fileNameWithoutExt)) {
+                console.log(fileNameWithoutExt, ": ", isAliasTrue(fileNameWithoutExt));
+            }
             // Replace internal markdown links with the Spec-Up-T reference format
             await appendFileAsync(newFilePath, replaceInternalMarkdownLinks(fileContent));
             // console.log(`Successfully converted file: ${newFilePath}`);
 
         } else {
-
             console.log(`File not found in ToIP_Fkey: ${fileNameWithoutExt}`);
             numberOfMissingMatches++;
 
