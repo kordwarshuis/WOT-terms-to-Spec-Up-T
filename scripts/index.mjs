@@ -92,8 +92,8 @@ function main() {
     // }
 
     // B: Remove the heading and the content
-    function removeMarkdownHeadings(markdown) {
-        return markdown
+    function removeMarkdownHeadings(fileContent) {
+        return fileContent
             .split('\n') // Split the string into lines
             .filter(line => {
                 // Check if the line starts with '#' (indicating a heading)
