@@ -33,6 +33,7 @@ function main() {
     const googlesheetValues = JSON.parse(googlesheet).values;
     const indexOfToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
     const indexOfAlias = googlesheetValues[0].indexOf('Alias');
+    const indexOfTerm = googlesheetValues[0].indexOf('Term');
     let allToIP_FkeyValues = [];
     let numberOfMissingMatches = 0;
 
