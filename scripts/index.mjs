@@ -142,7 +142,6 @@ function main() {
 
     async function convertFiles(filePath) {
         try {
-
             // show only the file name
             const fileNameWithExt = filePath.split('/').pop();
             const fileNameWithoutExt = fileNameWithExt.split('.')[0];
