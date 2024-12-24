@@ -25,7 +25,7 @@ function main() {
     // const sourceDirectoryPath = './specsource';
     const fileExtension = '.md';
     const googlesheet = readFileSync('./output/metadata.json', 'utf8');
-    const config = fs.readJsonSync('./output/metadata.json');
+    const config = fs.readJsonSync('./output/specs-generated.json');
     const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     /* END CONFIG */
 
