@@ -28,13 +28,25 @@ googlesheetValues.forEach((row, index) => {
 });
 
 
+function replaceInternalMarkdownLinks(fileContent) {
+    // Regular expression to match internal markdown links
+    const internalLinkRegex = /\[([^\]]+)\]\((?!http)([^)]+)\)/g;
+
+    // Replace the markdown links with the desired format
+    const updatedContent = fileContent.replace(internalLinkRegex, (match, p1, p2) => {
+        return `[[ref: ${p2}]]`;
+    });
+
+    return updatedContent;
+}
+
 // Example usage:
 // Define a function to run on each file
 async function convertFiles(filePath) {
     try {
         const fileContent = readFileSync(filePath, 'utf8');
         const newFilePath = path.join(termsdir, path.basename(filePath));
-        await appendFileAsync(newFilePath, fileContent + ' pipo');
+        await appendFileAsync(newFilePath, replaceInternalMarkdownLinks(fileContent));
         console.log(`Successfully appended to file: ${newFilePath}`);
 
 
@@ -55,6 +67,7 @@ async function convertFiles(filePath) {
 }
 
 (async () => {
+    await fs.emptyDir(termsdir);
     await processFilesInDirectory(sourceDirectoryPath, fileExtension, convertFiles);
     console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
 })();
