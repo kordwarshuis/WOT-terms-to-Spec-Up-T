@@ -3,6 +3,7 @@ import { promisify } from 'util';
 import path from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
+import makeBackupOfWikiFiles from "./modules/makeBackupOfWikiFiles.mjs";
 import readline from 'readline';
 
 let sourceDirectoryPath = '';
@@ -219,6 +220,7 @@ function main() {
 
     (async () => {
         await fs.emptyDir(termsdir);
+        await makeBackupOfWikiFiles(sourceDirectoryPath, "./backupOfWikiFiles");
         await processFilesInDirectory(sourceDirectoryPath, fileExtension, convertFiles);
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
