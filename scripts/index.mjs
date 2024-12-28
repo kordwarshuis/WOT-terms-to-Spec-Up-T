@@ -205,6 +205,9 @@ function main() {
                 // Conversion to Spec-Up-T: Remove markdown headings
                 fileContent = removeMarkdownHeadings(fileContent);
 
+                // Add a line at the end of the file with a link to the KERI glossary
+                fileContent += `\nMore in <a href="https://weboftrust.github.io/WOT-terms/docs/glossary/${fileNameWithoutExt}">extended KERI glossary</a>`
+
                 // Conversion to Spec-Up-T: Write the updated content to the new file
                 await appendFileAsync(newFilePath, fileContent);
             } else {
