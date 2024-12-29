@@ -22,6 +22,8 @@ rl.question('\n\n\n********************\n\nPlease enter the path to the source d
 
 
 function main() { 
+
+    
     /* CONFIG */
     // const sourceDirectoryPath = './specsource';
     const fileExtension = '.md';
@@ -29,7 +31,7 @@ function main() {
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     /* END CONFIG */
-
+    
     const appendFileAsync = promisify(appendFile);
     const googlesheetValues = JSON.parse(googlesheet).values;
     const indexOfToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
@@ -139,6 +141,45 @@ function main() {
         return newContent;
     }
 
+    function removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile(filePath) {
+        // verwijder het eerste stuk van de file tot aan de tweede heading en schrijf het naar een nieuwe wiki file
+        try { 
+            const fileContent = readFileSync(filePath, 'utf8');
+            // // show only the file name
+            const fileNameWithExt = filePath.split('/').pop();
+            const fileNameWithoutExt = fileNameWithExt.split('.')[0];
+            const lines = fileContent.split('\n');
+            let headingCount = 0;
+            let result = [];
+            let skip = false;
+            result.push(`## Term Definition\n\nSpec-Up-T link: <a href='https://weboftrust.github.io/WOT-terms/docs/glossary/${fileNameWithoutExt}'>here</a>\n`);
+            for (let line of lines) {
+                if (/^#+\s/.test(line)) {
+                    headingCount++;
+                    if (headingCount === 1) {
+                        skip = true;
+                    } else if (headingCount === 2) {
+                        skip = false;
+                    }
+                }
+                if (!skip) {
+                    result.push(line);
+                }
+            }
+
+            const newContent = result.join('\n');
+
+            fs.writeFile(filePath, newContent, (err) => {
+                if (err) throw err;
+                console.log('File has been overwritten with new content');
+            });
+            
+        } catch (err
+        ) {
+            console.error(`${filePath}`, err);
+        }
+    }
+
     function ensureNewlineAfterPattern(fileContent) {
         const pattern = '## See ';
         const lines = fileContent.split('\n');
@@ -160,6 +201,7 @@ function main() {
 
     async function convertFiles(filePath) {
         try {
+            // console.log('filePath: ', filePath);
             // show only the file name
             const fileNameWithExt = filePath.split('/').pop();
             const fileNameWithoutExt = fileNameWithExt.split('.')[0];
@@ -223,8 +265,10 @@ function main() {
 
     (async () => {
         await fs.emptyDir(termsdir);
-        await makeBackupOfWikiFiles(sourceDirectoryPath, "./backupOfWikiFiles");
+        await makeBackupOfWikiFiles(sourceDirectoryPath, "./newWikiFiles");
+        await processFilesInDirectory("./newWikiFiles", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
         await processFilesInDirectory(sourceDirectoryPath, fileExtension, convertFiles);
+
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
 
