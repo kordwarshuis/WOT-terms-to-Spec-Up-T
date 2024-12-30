@@ -9,8 +9,15 @@ import path from 'path';
  * @param {string} targetDir - The target directory.
  * @returns {Promise<void>}
  */
-async function copyFiles(sourceDir, targetDir) {
+async function copyFiles(sourceDir, targetDir, overwrite) {
     try {
+
+        if (fs.existsSync(targetDir) && !overwrite) {
+            console.log("Target directory already exists.");
+            return
+        }
+
+
         // Check if targetDir exists, if it exists, empty it
         if (fs.existsSync(targetDir)) {
             const files = await fs.promises.readdir(targetDir);
@@ -23,7 +30,7 @@ async function copyFiles(sourceDir, targetDir) {
 
         const files = await fs.promises.readdir(sourceDir);
         const promises = files
-            .filter(file => file !== '.git' && file !== '.gitignore')
+            .filter(file => !file.startsWith('.'))
             .map(async (file) => {
                 const sourcePath = path.join(sourceDir, file);
                 const targetPath = path.join(targetDir, file);
