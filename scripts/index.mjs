@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import path from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
-import makeBackupOfWikiFiles from "./modules/makeBackupOfWikiFiles.mjs";
+import makeCopyOfWikiFiles from "./modules/makeCopyOfWikiFiles.mjs";
 import readline from 'readline';
 
 let sourceDirectoryPath = '';
@@ -265,7 +265,8 @@ function main() {
 
     (async () => {
         await fs.emptyDir(termsdir);
-        await makeBackupOfWikiFiles(sourceDirectoryPath, "./newWikiFiles");
+        await makeCopyOfWikiFiles(sourceDirectoryPath, "./backupWikiFiles", false);
+        await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles", true);
         await processFilesInDirectory("./newWikiFiles", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
         await processFilesInDirectory(sourceDirectoryPath, fileExtension, convertFiles);
 
