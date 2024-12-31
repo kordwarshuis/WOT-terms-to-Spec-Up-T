@@ -266,7 +266,7 @@ function main() {
         await makeCopyOfWikiFiles(sourceDirectoryPath, "./backupWikiFiles", false);
         await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles", true);
         await processFilesInDirectory("./newWikiFiles", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
-        await processFilesInDirectory(sourceDirectoryPath, fileExtension, convertFiles);
+        await processFilesInDirectory("./newWikiFiles", fileExtension, convertFiles);
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
