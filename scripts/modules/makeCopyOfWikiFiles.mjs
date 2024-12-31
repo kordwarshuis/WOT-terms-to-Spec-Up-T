@@ -30,7 +30,7 @@ async function copyFiles(sourceDir, targetDir, overwrite) {
 
         const files = await fs.promises.readdir(sourceDir);
         const promises = files
-            .filter(file => !file.startsWith('.'))
+            .filter(file => !file.startsWith('.') && file !== 'Home.md')
             .map(async (file) => {
                 const sourcePath = path.join(sourceDir, file);
                 const targetPath = path.join(targetDir, file);
