@@ -171,7 +171,6 @@ function main() {
 
             fs.writeFile(filePath, newContent, (err) => {
                 if (err) throw err;
-                console.log('File has been overwritten with new content');
             });
             
         } catch (err
