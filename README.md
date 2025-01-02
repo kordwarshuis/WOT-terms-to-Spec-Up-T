@@ -18,7 +18,7 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 ```
 
 - Install pieced together conversion package:
-`$ npm install wottermstospecupt`
+```$ npm install wottermstospecupt```
 
 - Add two entries to your `scripts` section in `package.json`:
 
@@ -28,16 +28,18 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 ```
 
 - Run the render option at least once
-`$ npm run menu`
+```$ npm run menu```
 Choose option 1 (render)
 
 - Fetch meta info:
-`$ npm run fetch`
+```$ npm run fetch```
 
 - Do the conversion
-`$ npm run convert`
+```$ npm run convert```
 
-$ npm run menu
-Choose option 1 (render)
+- Start menu
+```$ npm run menu```
+
+- Choose option 1 (render)
 
 Now you should have an index.html. If you didn't get any error messages along the way.
