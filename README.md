@@ -6,7 +6,7 @@ This is a tool to convert WOT terms to Spec-Up-T
 
 ## How to use
 
-- Add this to .env file of the target repo you had already created:
+- Add this code snippet locally to .env file (or create from the  ".env.example") of the target repo for your to glossary to be, supposing you had already created this repo:
 
 ```
 #===BEGIN===
@@ -16,6 +16,10 @@ TERMS_WOT_MANAGE_JSON_DIR_NAME=”./output/”
 TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 #===END===
 ```
+
+::: Warning
+Check that the .env file is in the .gitignore
+:::
 
 - Install pieced together conversion package:
 ```$ npm install wottermstospecupt```
