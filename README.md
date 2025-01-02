@@ -9,12 +9,12 @@ This is a tool to convert WOT terms to Spec-Up-T
 - Add this to .env file of the target repo you had already created:
 
 ```
-#===BEGIN .ENV===
+#===BEGIN===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
 TERMS_WOT_MANAGE_JSON_ENDPOINT="-----”
 TERMS_WOT_MANAGE_JSON_DIR_NAME=”./output/”
 TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
-#===END .ENV===
+#===END===
 ```
 
 - Install pieced together conversion package:
