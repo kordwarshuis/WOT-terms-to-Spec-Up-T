@@ -35,7 +35,7 @@ npm install wottermstospecupt
 "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
 ```
 
-You should get this (… is the rest of the script section):
+You should get this (“…” is the rest of the script section):
 
 ```json
 "scripts": {
