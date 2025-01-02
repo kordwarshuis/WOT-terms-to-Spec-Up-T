@@ -11,7 +11,7 @@ This is a tool to convert WOT terms to Spec-Up-T
 ```
 #===BEGIN===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
-TERMS_WOT_MANAGE_JSON_ENDPOINT="-----”
+TERMS_WOT_MANAGE_JSON_ENDPOINT="*****”
 TERMS_WOT_MANAGE_JSON_DIR_NAME=”./output/”
 TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 #===END===
