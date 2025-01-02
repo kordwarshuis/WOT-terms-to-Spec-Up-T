@@ -41,7 +41,7 @@ You should get this (“…” is the rest of the script section):
 "scripts": {
     …
     "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
-    "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
+    "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
     …
   }
 ```
