@@ -18,9 +18,9 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 ```
 
 - Install pieced together conversion package:
-$ npm install wottermstospecupt
+`$ npm install wottermstospecupt`
 
-- Add two entries to your “scripts” section in package.json
+- Add two entries to your `scripts` section in `package.json`:
 
 ```bash
 “convert“: ‘node -e ″import(’wottermstospecupt/scripts/index.mjs')″”,
