@@ -6,7 +6,7 @@ This is a tool to convert WOT terms to Spec-Up-T
 
 ## How to use
 
-- Add this code snippet locally to .env file (or create from the  ".env.example") of the target repo for your to glossary to be, supposing you had already created this repo:
+- To import meta data from an external source, add this code snippet below locally to .env file (or create from the ".env.example") of the target repo for your to glossary to be, supposing you had already created this repo:
 
 ```bash
 #===BEGIN===
