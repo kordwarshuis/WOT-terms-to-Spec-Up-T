@@ -19,9 +19,8 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 
 Replace “*****” with a valid Google Sheet Key (ask someone who has gone through the procedure of obtaining a key).
 
-:::warning
-Check that the .env file is in the .gitignore
-:::
+> **Warning**
+> Check that the .env file is in the .gitignore
 
 - Install pieced together conversion package:
 ```$ npm install wottermstospecupt```
