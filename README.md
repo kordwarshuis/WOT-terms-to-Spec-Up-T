@@ -19,7 +19,7 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 
 Replace “*****” with a valid Google Sheet Key (ask someone who has gone through the procedure of obtaining a key).
 
-::: Warning
+:::warning
 Check that the .env file is in the .gitignore
 :::
 
@@ -29,8 +29,8 @@ Check that the .env file is in the .gitignore
 - Add two entries to your `scripts` section in `package.json`:
 
 ```bash
-“convert“: ‘node -e ″import(’wottermstospecupt/scripts/index.mjs')″”,
-“fetch": ‘node -e ″import(’wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')″”
+    "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
+    "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
 ```
 
 - Run the render option at least once
