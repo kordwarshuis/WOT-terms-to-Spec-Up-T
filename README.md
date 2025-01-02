@@ -6,7 +6,7 @@ This is a tool to convert WOT terms to Spec-Up-T
 
 ## How to use
 
-- To import meta data from an external source, add this code snippet below locally to .env file (or create from the ".env.example") of the target repo for your to glossary to be, supposing you had already created this repo:
+- To import meta data from an external source, add this code snippet below locally to .env file (or create from the ".env.example") of the target repo for your glossary to be, supposing you had already created this repo:
 
 ```bash
 #===BEGIN===
@@ -22,7 +22,7 @@ Replace “*****” with a valid Google Sheet Key (ask someone who has gone thro
 > **Warning**
 > Check that the .env file is in the .gitignore
 
-- Install pieced together conversion package:
+- To be able to convert your own terminology into a Spec-Up-T valid terminology, install the  conversion package in the root of your target repo:
 
 ```bash
 npm install wottermstospecupt
