@@ -8,8 +8,6 @@ This is a tool to convert WOT terms to Spec-Up-T
 
 - Add this to .env file of the target repo you had already created:
 
-GITHUB_API_TOKEN=YOUR_GITHUB_API_TOKEN
-
 ```
 #===BEGIN .ENV===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
