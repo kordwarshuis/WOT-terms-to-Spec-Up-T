@@ -8,7 +8,7 @@ This is a tool to convert WOT terms to Spec-Up-T
 
 - Add this code snippet locally to .env file (or create from the  ".env.example") of the target repo for your to glossary to be, supposing you had already created this repo:
 
-```
+```bash
 #===BEGIN===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
 TERMS_WOT_MANAGE_JSON_ENDPOINT="*****”
@@ -23,27 +23,43 @@ Replace “*****” with a valid Google Sheet Key (ask someone who has gone thro
 > Check that the .env file is in the .gitignore
 
 - Install pieced together conversion package:
-```$ npm install wottermstospecupt```
+
+```bash
+npm install wottermstospecupt
+```
 
 - Add two entries to your `scripts` section in `package.json`:
 
 ```bash
-    "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
-    "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
+"convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
+"fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
 ```
 
-- Run the render option at least once
-```$ npm run menu```
+- Run the render option at least once:
+  
+```bash
+npm run menu
+```
+
 Choose option 1 (render)
 
 - Fetch meta info:
-```$ npm run fetch```
+  
+```bash
+npm run fetch
+```
 
 - Do the conversion
-```$ npm run convert```
+
+```bash
+npm run convert
+```
 
 - Start menu
-```$ npm run menu```
+
+```bash
+npm run menu
+```
 
 - Choose option 1 (render)
 
