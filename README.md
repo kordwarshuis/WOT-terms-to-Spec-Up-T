@@ -30,9 +30,20 @@ npm install wottermstospecupt
 
 - Add two entries to your `scripts` section in `package.json`:
 
-```bash
+```json
 "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
 "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
+```
+
+You should get this (… is the rest of the script section):
+
+```json
+"scripts": {
+    …
+    "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
+    "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
+    …
+  }
 ```
 
 - Run the render option at least once:
