@@ -49,21 +49,21 @@ Replace “*****” with a valid Google Sheet Key (ask someone who has gone thro
 npm install wottermstospecupt
 ```
 
-- Add two entries to your `scripts` section in `package.json`:
+- Add two entries to your `scripts` section in `package.json` (the order of the entries doesn't matter, put it anywhere you like):
 
 ```json
 "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
 "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
 ```
 
-You should get this (“…” is the rest of the script section):
+You should get this:
 
 ```json
 "scripts": {
-    …
+    // ... other scripts ...
     "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
     "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
-    …
+    // ... other scripts ...
   }
 ```
 
