@@ -90,6 +90,8 @@ You only need to repeat this step above if you change something in the metadata.
 
 The reason why you need to fetch again is, that the resulting terminology must come in sync with your latest changes to the meta data and instructional data in JSON.
 
+If you don't, there is a copy in your Start-Up-T installation that ... -> Only the latest copy fetched in your Start-Up-T installation will be used every time you repeat the next steps, like `npm run convert`
+
 - Do the conversion
 
 ```bash
