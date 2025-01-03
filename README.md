@@ -95,4 +95,12 @@ npm run menu
 
 - Choose option 1 (render)
 
-Now you should have an index.html. If you didn't get any error messages along the way.
+## Results
+
+If everything went as planned, you should now have the following:
+
+- a `/spec/terms-definitions/` directory containing definition files
+- a `docs/index.html` file containing a specification with the terms extracted from the Wiki
+- a `/newWikiFiles` directoryh containing new Wiki files from which the definition has been extracted and containing links pointing to the new specification (TODO: the links are now hard-coded for a specific situation, this needs to be changed)
+
+
