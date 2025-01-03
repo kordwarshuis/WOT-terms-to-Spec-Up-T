@@ -7,7 +7,7 @@ More generic: This is a tool that ...
 
 This script uses Spec-Up-T, see [documentation about Spec-Up-T](https://trustoverip.github.io/spec-up-t-website/).
 
-## Starting situation
+## Initial situation
 
 Requirements:
 
