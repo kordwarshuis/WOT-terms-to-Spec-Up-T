@@ -10,7 +10,6 @@
 */
 
 
-// This script should be run from the root of the project
 
 import fs, { existsSync } from 'fs';
 import path, { join } from 'path';
@@ -19,6 +18,7 @@ import { config } from 'dotenv';
 config();
 
 
+// This script should be run from the root of the project, let's check if we are in the right directory
 const isRoot = existsSync(join(process.cwd(), 'package.json'));
 
 if (!isRoot) {
