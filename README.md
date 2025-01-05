@@ -32,7 +32,9 @@ The output is:
 
 ## How to use: detailed
 
-- To import meta data from an external source (in this case the Google Sheet containing meta data), add this code snippet below locally to .env file (or create from the ".env.example") of the target repo for your glossary to be, supposing you had already created this repo:
+### Add info to `.env`
+
+To import meta data from an external source (in this case the Google Sheet containing meta data), add this code snippet below locally to .env file (or create from the ".env.example") of the target repo for your glossary to be, supposing you had already created this repo:
 
 ```bash
 #===BEGIN===
@@ -48,20 +50,24 @@ Replace “*****” with a valid Google Sheet Key (ask someone who has gone thro
 > **Warning**
 > Check that the .env file is in the .gitignore since you do not want secret information visible on GitHub.
 
-- To be able to convert your own terminology into a Spec-Up-T valid terminology, install the  conversion package in the root of your target repo:
+### Install `wottermstospecupt`
+
+To be able to convert your own terminology into a Spec-Up-T valid terminology, install the  conversion package in the root of your target repo:
 
 ```bash
 npm install wottermstospecupt
 ```
 
-- Add two entries to your `scripts` section in `package.json` (the order of the entries doesn't matter, put it anywhere you like):
+### Add entries to `scripts` in `package.json`
+
+Add two entries to your `scripts` section in `package.json` (the order of the entries doesn't matter, put it anywhere you like):
 
 ```json
 "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
 "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
 ```
 
-You should get this:
+This should be the endresult:
 
 ```json
 "scripts": {
@@ -72,7 +78,9 @@ You should get this:
   }
 ```
 
-- Run the render option at least once (This step is still necessary now but will disappear in the future):
+### Run `render`
+
+Run the render option at least once (This step is still necessary now but will disappear in the future):
   
 ```bash
 npm run menu
@@ -80,8 +88,10 @@ npm run menu
 
 Choose option 1 (render)
 
-- Fetch meta info:
-  
+### Fetch meta info:
+
+Now fetch the meta-date via the following command:
+
 ```bash
 npm run fetch
 ```
@@ -90,19 +100,21 @@ You only need to repeat this step above if you change something in the metadata.
 
 The reason why you need to fetch again is, that the resulting terminology must come in sync with your latest changes to the meta data and instructional data in JSON.
 
-- Do the conversion
+### Do the conversion
 
 ```bash
 npm run convert
 ```
+### Render the specification
 
-- Start menu
+
+Start menu:
 
 ```bash
 npm run menu
 ```
 
-- Choose option 1 (render)
+Choose option 1 (render)
 
 ## Results
 
