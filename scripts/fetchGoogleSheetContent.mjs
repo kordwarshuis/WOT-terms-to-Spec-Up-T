@@ -12,22 +12,31 @@
 
 // This script should be run from the root of the project
 
-import fs from 'fs';
-import path from 'path';
+import fs, { existsSync } from 'fs';
+import path, { join } from 'path';
 import https from 'https';
 import { config } from 'dotenv';
 config();
 
+
+const isRoot = existsSync(join(process.cwd(), 'package.json'));
+
+if (!isRoot) {
+    console.error('\nThis script should be run from the root of the project\n');
+    process.exit(1);
+}
+
+
 // CONFIG
 // How to create JSON endpoint from Google Sheet: https://stackoverflow.com/a/68854199
 const url = process.env.TERMS_WOT_MANAGE_JSON_ENDPOINT;
-console.log('The data will be fetched from this url:', url);
+console.log('\nThe data will be fetched from this url:', url);
 
 const outputDirJSON = process.env.TERMS_WOT_MANAGE_JSON_DIR_NAME;
-console.log("The output will be saved to:", outputDirJSON);
+console.log('\nThe output will be saved to:', outputDirJSON);
 
 const outputFileNameJSON = process.env.TERMS_WOT_MANAGE_JSON_FILE_NAME;
-console.log('The output will be saved in a file called:', outputFileNameJSON);
+console.log('\nThe output will be saved in a file called:', outputFileNameJSON);
 
 https
     .get(url, (resp) => {
@@ -62,6 +71,6 @@ function writeJSONFile(content) {
         if (err) {
             return console.log(err);
         }
-        console.log('JSON file has been written successfully.');
+        console.log('\nJSON file has been written successfully.');
     });
 } // End writeJSONFile
