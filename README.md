@@ -39,18 +39,18 @@ To import meta data from an external source (in this case the Google Sheet conta
 This is the content to be added to the `.env` file:
 
 ```bash
-#===BEGIN===
+#=== BEGIN FETCHING INFO FROM GOOGLE SHEET ===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
 TERMS_WOT_MANAGE_JSON_ENDPOINT="*****”
 TERMS_WOT_MANAGE_JSON_DIR_NAME=”./output/”
 TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
-#===END===
+#=== END FETCHING INFO FROM GOOGLE SHEET ===
 ```
 
 Replace “*****” with a valid Google Sheet Key (ask someone who has gone through the procedure of obtaining a key).
 
 > **Warning**
-> Check that the .env file is in the .gitignore since you do not want secret information visible on GitHub.
+> Double check that the .env file is in the .gitignore since you do not want secret information visible on GitHub.
 
 ### Install `wottermstospecupt`
 
@@ -84,7 +84,7 @@ This should be the endresult:
 
 Run the render option at least once (This step is still necessary now but will disappear in the future).
 
-Now start the menu:
+You will run the render option by starting the menu:
   
 ```bash
 npm run menu
@@ -112,7 +112,7 @@ npm run convert
 ### Render the specification
 
 
-Now start the menu:
+You will run the render option by starting the menu:
 
 ```bash
 npm run menu
