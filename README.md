@@ -50,7 +50,6 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 Replace “*****” with a valid Google Sheet Key (ask someone who has gone through the procedure of obtaining a key).
 
 > **Warning**
-> 
 > Check that the .env file is in the .gitignore since you do not want secret information visible on GitHub.
 
 ### Install `wottermstospecupt`
@@ -83,13 +82,15 @@ This should be the endresult:
 
 ### Run `render`
 
-Run the render option at least once (This step is still necessary now but will disappear in the future):
+Run the render option at least once (This step is still necessary now but will disappear in the future).
+
+Now start the menu:
   
 ```bash
 npm run menu
 ```
 
-Choose option 1 (render)
+You will see several menu entries. Choose option 1 (render).
 
 ### Fetch meta info:
 
@@ -111,13 +112,13 @@ npm run convert
 ### Render the specification
 
 
-Start menu:
+Now start the menu:
 
 ```bash
 npm run menu
 ```
 
-Choose option 1 (render)
+You will see several menu entries. Choose option 1 (render).
 
 ## Results
 
