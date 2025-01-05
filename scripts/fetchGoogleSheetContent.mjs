@@ -58,14 +58,10 @@ function writeJSONFile(content) {
     // Path to the output file
     const filePath = path.join(outputDirJSON, outputFileNameJSON);
 
-    fs.writeFile(
-        filePath,
-        content,
-        function (err) {
-            if (err) {
-                return console.log(err);
-            }
-            console.log('JSON file has been written successfully.');
+    fs.writeFile(filePath, content, function (err) {
+        if (err) {
+            return console.log(err);
         }
-    );
+        console.log('JSON file has been written successfully.');
+    });
 } // End writeJSONFile
