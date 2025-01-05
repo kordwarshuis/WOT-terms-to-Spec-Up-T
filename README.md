@@ -46,7 +46,7 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 Replace “*****” with a valid Google Sheet Key (ask someone who has gone through the procedure of obtaining a key).
 
 > **Warning**
-> Check that the .env file is in the .gitignore
+> Check that the .env file is in the .gitignore since you do not want secret information visible on GitHub.
 
 - To be able to convert your own terminology into a Spec-Up-T valid terminology, install the  conversion package in the root of your target repo:
 
