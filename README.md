@@ -34,7 +34,9 @@ The output is:
 
 ### Add info to `.env`
 
-To import meta data from an external source (in this case the Google Sheet containing meta data), add this code snippet below locally to .env file (or create from the ".env.example") of the target repo for your glossary to be, supposing you had already created this repo:
+To import meta data from an external source (in this case the Google Sheet containing meta data), add this code snippet below locally to the `.env` file (or create from the `.env.example`) of the target repo for your glossary to be, supposing you had already created this repo.
+
+This is the content to be added to the `.env` file:
 
 ```bash
 #===BEGIN===
@@ -48,6 +50,7 @@ TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
 Replace “*****” with a valid Google Sheet Key (ask someone who has gone through the procedure of obtaining a key).
 
 > **Warning**
+> 
 > Check that the .env file is in the .gitignore since you do not want secret information visible on GitHub.
 
 ### Install `wottermstospecupt`
