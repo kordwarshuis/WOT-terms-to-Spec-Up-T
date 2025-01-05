@@ -106,6 +106,8 @@ The reason why you need to fetch again is, that the resulting terminology must c
 
 ### Do the conversion
 
+The conversion takes the Wiki files, grabs the first paragraph (the definition) in each file, places it in the Spec-Up-T specification with a link to the Wiki, and also takes the definition from the Wiki file and adds a link to the Spec-Up-T specification with each term.
+
 ```bash
 npm run convert
 ```
