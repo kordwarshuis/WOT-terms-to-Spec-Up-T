@@ -112,4 +112,8 @@ If everything went as planned, you should now have the following:
 - a `docs/index.html` file containing a specification with the terms extracted from the Wiki
 - a `/newWikiFiles` directory containing new Wiki files from which the definition has been extracted and containing links pointing to the new specification (TODO: the links are now hard-coded for a specific situation, this needs to be changed)
 
+## Troubeshooting
 
+Things to check:
+
+to be written
