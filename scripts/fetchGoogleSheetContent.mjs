@@ -9,8 +9,6 @@
 
 */
 
-
-
 import fs, { existsSync } from 'fs';
 import path, { join } from 'path';
 import https from 'https';
@@ -25,7 +23,6 @@ if (!isRoot) {
     console.error('\nThis script should be run from the root of the project\n');
     process.exit(1);
 }
-
 
 // CONFIG
 // How to create JSON endpoint from Google Sheet: https://stackoverflow.com/a/68854199
