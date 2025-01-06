@@ -262,10 +262,19 @@ function main() {
     }
 
     (async () => {
+        // Empty the terms directory
         await fs.emptyDir(termsdir);
+        
+        // Make a copy of the wiki files to a backup directory
         await makeCopyOfWikiFiles(sourceDirectoryPath, "./backupWikiFiles", false);
+        
+        // Make a copy of the wiki files to a new directory
         await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles", true);
+        
+        // remove First Heading Until Second Heading And Write To New Wiki File for each file in the newWikiFiles directory
         await processFilesInDirectory("./newWikiFiles", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
+
+        // Convert the files in the newWikiFiles directory
         await processFilesInDirectory("./newWikiFiles", fileExtension, convertFiles);
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
