@@ -41,9 +41,9 @@ This is the content to be added to the `.env` file:
 ```bash
 #=== BEGIN FETCHING INFO FROM GOOGLE SHEET ===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
-TERMS_WOT_MANAGE_JSON_ENDPOINT="*****”
-TERMS_WOT_MANAGE_JSON_DIR_NAME=”./output/”
-TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json”
+TERMS_WOT_MANAGE_JSON_ENDPOINT=******
+TERMS_WOT_MANAGE_JSON_DIR_NAME=./output/
+TERMS_WOT_MANAGE_JSON_FILE_NAME=metadata.json
 #=== END FETCHING INFO FROM GOOGLE SHEET ===
 ```
 
@@ -136,6 +136,10 @@ If everything went as planned, you should now have the following:
 
 ## Troubeshooting
 
-Things to check:
+- Make sure you did not use quotes around the values in the `.env` file:
 
-to be written
+Good:
+`TERMS_WOT_MANAGE_JSON_FILE_NAME=metadata.json`
+
+Wrong:
+`TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json"`
