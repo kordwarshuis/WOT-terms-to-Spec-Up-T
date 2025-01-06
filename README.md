@@ -162,9 +162,19 @@ spec
 
 
 - a `/spec/terms-definitions/` directory containing definition files
-- a `docs/index.html` file containing a specification with the terms extracted from the Wiki
+- a `/docs/index.html` file containing a specification with the terms extracted from the Wiki
 - a `/sourceFilesConverted` directory containing new source files from which the definition has been extracted and containing links pointing to the new specification (TODO: the links are now hard-coded for a specific situation, this needs to be changed)
 - Inside `/sourceFilesConverted` you'll find a `latest` directory which contains the latest conversion, and an `archive` directory that contains a one time backup directory (`initialBackup`) and conversions made earlier (each in a directory consisting of a number, which is a Unix timestamp, for example `1736169814`).
+
+## How to use the results
+
+### `/docs/index.html`
+
+This is the file to be hosted on your GitHub Pages, or somewhere else on a domain.
+
+### `/sourceFilesConverted/latest`
+
+These files are the modified files from your original source (for example a GitHub Wiki). You can move these to the original Wiki.
 
 ## Troubeshooting
 
@@ -175,3 +185,9 @@ Good:
 
 Wrong:
 `TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json"`
+
+## FAQ
+
+### Can I safely delete the `sourceFilesConverted` directory?
+
+Yes, no problem. You can always start again.
