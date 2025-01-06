@@ -178,7 +178,13 @@ These files are the modified files from your original source (for example a GitH
 
 ## Troubeshooting
 
-- Make sure you did not use quotes around the values in the `.env` file:
+### Wrong directory?
+
+Make sure you are in the root of your project and not in a subdirectory, or outside your project directory.
+
+### Quotes in `.env`?
+
+Make sure you did not use quotes around the values in the `.env` file:
 
 Good:
 `TERMS_WOT_MANAGE_JSON_FILE_NAME=metadata.json`
