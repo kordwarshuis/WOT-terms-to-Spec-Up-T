@@ -61,8 +61,12 @@ function writeJSONFile(content) {
         fs.mkdirSync(outputDirJSON, { recursive: true });
     }
 
+    // Write the first 300 characters of the content to the console
+    console.log('\nHere is the first 300 characters of the content:\n', content.slice(0, 300));
+
     // Path to the output file
     const filePath = path.join(outputDirJSON, outputFileNameJSON);
+    console.log('This will be written to: ', filePath);
 
     fs.writeFile(filePath, content, function (err) {
         if (err) {
