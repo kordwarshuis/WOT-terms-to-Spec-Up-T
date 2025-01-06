@@ -266,16 +266,21 @@ function main() {
         await fs.emptyDir(termsdir);
         
         // Make a copy of the wiki files to a backup directory
-        await makeCopyOfWikiFiles(sourceDirectoryPath, "./backupWikiFiles", false);
+        await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles/archive/initialBackup", false);
         
         // Make a copy of the wiki files to a new directory
-        await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles", true);
+        await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles/latest", true);
         
         // remove First Heading Until Second Heading And Write To New Wiki File for each file in the newWikiFiles directory
-        await processFilesInDirectory("./newWikiFiles", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
+        await processFilesInDirectory("./newWikiFiles/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
 
         // Convert the files in the newWikiFiles directory
-        await processFilesInDirectory("./newWikiFiles", fileExtension, convertFiles);
+        await processFilesInDirectory("./newWikiFiles/latest", fileExtension, convertFiles);
+
+        // create a unix timestamp of the current date and time
+        const timestamp = Math.floor(Date.now() / 1000);
+        await makeCopyOfWikiFiles("./newWikiFiles/latest", `./newWikiFiles/archive/${timestamp}`, false);
+
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
