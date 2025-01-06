@@ -13,7 +13,7 @@ async function copyFiles(sourceDir, targetDir, overwrite) {
     try {
 
         if (fs.existsSync(targetDir) && !overwrite) {
-            console.log("Target directory already exists.");
+            console.log("Target directory already exists, and therefore we do not copy files.");
             return
         }
 
