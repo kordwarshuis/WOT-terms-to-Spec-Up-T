@@ -164,7 +164,7 @@ spec
 - a `/spec/terms-definitions/` directory containing definition files
 - a `docs/index.html` file containing a specification with the terms extracted from the Wiki
 - a `/sourceFilesConverted` directory containing new source files from which the definition has been extracted and containing links pointing to the new specification (TODO: the links are now hard-coded for a specific situation, this needs to be changed)
-- Inside `/sourceFilesConverted` you'll find a `latest` directory which contains the latest conversion, and an `archive` directory that contains a one time backup directory (`initialBackup`) and conversions made earlier (each in a directory consisting of a number, which is a Unix timestamp).
+- Inside `/sourceFilesConverted` you'll find a `latest` directory which contains the latest conversion, and an `archive` directory that contains a one time backup directory (`initialBackup`) and conversions made earlier (each in a directory consisting of a number, which is a Unix timestamp, for example `1736169814`).
 
 ## Troubeshooting
 
