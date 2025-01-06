@@ -26,11 +26,18 @@ function main() {
     
     /* CONFIG */
     const fileExtension = '.md';
-    const googlesheet = readFileSync('./output/metadata.json', 'utf8');
+    const googlesheetURL = './output/metadata.json';
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     /* END CONFIG */
     
+
+    if (!fs.existsSync(googlesheetURL)) {
+        console.log(`Warning: The file ${googlesheetURL} does not exist. Run “npm run fetch” first, to fetch the metadata.`);
+        return;
+    }
+    const googlesheet = readFileSync(googlesheetURL);
+
     const appendFileAsync = promisify(appendFile);
     const googlesheetValues = JSON.parse(googlesheet).values;
     const indexOfToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
