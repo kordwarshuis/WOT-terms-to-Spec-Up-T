@@ -192,6 +192,15 @@ Good:
 Wrong:
 `TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json"`
 
+### Things to check
+
+- enough user rights?
+- right Google access token?
+- internet working?
+- firewalls blocking?
+- corrupted meta data (columns inserted, column names changed, etc )
+
+
 ## FAQ
 
 ### Can I safely delete the `sourceFilesConverted` directory?
