@@ -266,20 +266,20 @@ function main() {
         await fs.emptyDir(termsdir);
         
         // Make a copy of the wiki files to a backup directory
-        await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles/archive/initialBackup", false);
+        await makeCopyOfWikiFiles(sourceDirectoryPath, "./sourceFilesConverted/archive/initialBackup", false);
         
         // Make a copy of the wiki files to a new directory
-        await makeCopyOfWikiFiles(sourceDirectoryPath, "./newWikiFiles/latest", true);
+        await makeCopyOfWikiFiles(sourceDirectoryPath, "./sourceFilesConverted/latest", true);
         
-        // remove First Heading Until Second Heading And Write To New Wiki File for each file in the newWikiFiles directory
-        await processFilesInDirectory("./newWikiFiles/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
+        // remove First Heading Until Second Heading And Write To New Wiki File for each file in the sourceFilesConverted directory
+        await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
 
-        // Convert the files in the newWikiFiles directory
-        await processFilesInDirectory("./newWikiFiles/latest", fileExtension, convertFiles);
+        // Convert the files in the sourceFilesConverted directory
+        await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, convertFiles);
 
         // create a unix timestamp of the current date and time
         const timestamp = Math.floor(Date.now() / 1000);
-        await makeCopyOfWikiFiles("./newWikiFiles/latest", `./newWikiFiles/archive/${timestamp}`, false);
+        await makeCopyOfWikiFiles("./sourceFilesConverted/latest", `./sourceFilesConverted/archive/${timestamp}`, false);
 
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
