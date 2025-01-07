@@ -155,7 +155,7 @@ function main() {
     }
 
     function removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile(filePath) {
-        // verwijder het eerste stuk van de file tot aan de tweede heading en schrijf het naar een nieuwe wiki file
+        // delete the first part of the file up to the second heading and write it to a new wiki file
         try { 
             const fileContent = readFileSync(filePath, 'utf8');
             // // show only the file name
