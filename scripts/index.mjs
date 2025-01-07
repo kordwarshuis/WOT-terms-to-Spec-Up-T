@@ -1,12 +1,21 @@
-import { readFileSync, appendFile } from 'fs';
+import { readFileSync, appendFile, existsSync } from 'fs';
 import { promisify } from 'util';
-import path from 'path';
+import path, { join } from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
 import makeCopyOfWikiFiles from "./modules/makeCopyOfWikiFiles.mjs";
 import readline from 'readline';
 
 let sourceDirectoryPath = '';
+
+// This script should be run from the root of the project, let's check if we are in the right directory
+const isRoot = existsSync(join(process.cwd(), 'package.json'));
+
+if (!isRoot) {
+    console.error('\nThis script should be run from the root of the project\nPlease go to the root of the project and try again.\n');
+    process.exit(1);
+}
+
 
 const rl = readline.createInterface({
     input: process.stdin,
