@@ -20,7 +20,7 @@ config();
 const isRoot = existsSync(join(process.cwd(), 'package.json'));
 
 if (!isRoot) {
-    console.error('\nThis script should be run from the root of the project\n');
+    console.error('\nThis script should be run from the root of the project\nPlease go to the root of the project and try again.\n');
     process.exit(1);
 }
 
