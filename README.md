@@ -11,10 +11,10 @@ This script uses Spec-Up-T, see [documentation about Spec-Up-T](https://trustove
 
 Requirements:
 
-- A local clone of your GitHub Wiki that is in a clean state. By this, we mean that when you query Git status (via `git status`), you read, “Nothing to commit.”
+- Source files. Example: A local clone of your GitHub Wiki that is in a clean state. By this, we mean that when you query Git status (via `git status`), you read, “Nothing to commit.”
 - Be sure to git fetch & git merge or git pull your latest source version from github.com or locally if maintained locally
-- A Google Sheet that holds meta data about the terms in the Wiki
-- A Spec-Up-T installation that will host the definitions you extract from the wiki. [Installation Instructions](https://trustoverip.github.io/spec-up-t-website/docs/general/installation)
+- A Google Sheet that holds meta data about the terms in the source
+- A Spec-Up-T installation that will host the definitions you extract from the source. [Installation Instructions](https://trustoverip.github.io/spec-up-t-website/docs/general/installation)
 - an NPM package called `wottermstospecupt` that you will install in the above mentioned Spec-Up-T installation
 
 ## How to use: overview
@@ -23,13 +23,13 @@ This script has an input part and an output part.
 
 The input is:
 
-- a GitHub wiki directory
+- a source directory
 
 The output is:
 
 - new files in the directory `/spec/terms-definitions/` (or another location if you deliberately set it that way)
-- a directory called “newWikiFiles”, which contains the edited wiki files, which you have to bring back to the wiki
-- a directory called `/backupWikiFiles`, this is purely a copy for security.
+- a directory called “sourceFilesConverted
+”, which contains the edited source files, which you have to bring back to the source
 
 ## How to use: detailed
 
@@ -109,7 +109,7 @@ The reason why you need to fetch again is, that the resulting terminology must c
 
 Before you start: be sure to git fetch & git merge or git pull your latest source version from github.com or locally if maintained locally.
 
-The conversion takes the Wiki files, grabs the first paragraph (the definition) in each file, places it in the Spec-Up-T specification with a link to the Wiki, and also takes the definition from the Wiki file and adds a link to the Spec-Up-T specification with each term.
+The conversion takes the source files, grabs the first paragraph (the definition) in each file, places it in the Spec-Up-T specification with a link to the source, and also takes the definition from the source file and adds a link to the Spec-Up-T specification with each term.
 
 ```bash
 npm run convert
@@ -165,7 +165,7 @@ spec
 
 
 - a `/spec/terms-definitions/` directory containing definition files
-- a `/docs/index.html` file containing a specification with the terms extracted from the Wiki
+- a `/docs/index.html` file containing a specification with the terms extracted from the source
 - a `/sourceFilesConverted` directory containing new source files from which the definition has been extracted and containing links pointing to the new specification (TODO: the links are now hard-coded for a specific situation, this needs to be changed)
 - Inside `/sourceFilesConverted` you'll find a `latest` directory which contains the latest conversion, and an `archive` directory that contains a one time backup directory (`initialBackup`) and conversions made earlier (each in a directory consisting of a number, which is a Unix timestamp, for example `1736169814`).
 
@@ -177,7 +177,7 @@ This is the file to be hosted on your GitHub Pages, or somewhere else on a domai
 
 ### `/sourceFilesConverted/latest`
 
-These files are the modified files from your original source (for example a GitHub Wiki). You can move these to the original Wiki.
+These files are the modified files from your original source (for example a GitHub Wiki). You can move these to the original source.
 
 ## Troubeshooting
 
