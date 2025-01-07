@@ -31,7 +31,6 @@ rl.question('\n\n\n********************\n\nPlease enter the path to the source d
 
 
 function main() { 
-
     
     /* CONFIG */
     const fileExtension = '.md';
@@ -39,7 +38,6 @@ function main() {
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     /* END CONFIG */
-    
 
     if (!fs.existsSync(googlesheetURL)) {
         console.log(`Warning: The file ${googlesheetURL} does not exist. Run “npm run fetch” first, to fetch the metadata.`);
