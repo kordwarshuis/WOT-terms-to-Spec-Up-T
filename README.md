@@ -42,9 +42,9 @@ This is the content to be added to the `.env` file:
 ```bash
 #=== BEGIN FETCHING INFO FROM GOOGLE SHEET ===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
-TERMS_WOT_MANAGE_JSON_ENDPOINT=******
-TERMS_WOT_MANAGE_JSON_DIR_NAME=./output/
-TERMS_WOT_MANAGE_JSON_FILE_NAME=metadata.json
+WOTTERMSTOSPECUPT_JSON_ENDPOINT=https://sheets.googleapis.com/v4/spreadsheets/18IUa-1NSJ_8Tz_2D-VSuSQa_yf3ES1s_hovitm3Clvc/values/Terms-WOT-manage?alt=json&key=AIzaSyCA4sOfLTriHKjaQftREYWMnQNokDHf_tM
+
+WOTTERMSTOSPECUPT_OUTPUT_DIR=sourceFilesConverted
 #=== END FETCHING INFO FROM GOOGLE SHEET ===
 ```
 
@@ -155,6 +155,7 @@ sourceFilesConverted
       term1.md
       term2.md
       term3.md
+  |_ metadata.json
 
 spec
   |_ terms-definitions
@@ -164,10 +165,12 @@ spec
 ```
 
 
-- a `/spec/terms-definitions/` directory containing definition files
-- a `/docs/index.html` file containing a specification with the terms extracted from the source
-- a `/sourceFilesConverted` directory containing new source files from which the definition has been extracted and containing links pointing to the new specification (TODO: the links are now hard-coded for a specific situation, this needs to be changed)
-- Inside `/sourceFilesConverted` you'll find a `latest` directory which contains the latest conversion, and an `archive` directory that contains a one time backup directory (`initialBackup`) and conversions made earlier (each in a directory consisting of a number, which is a Unix timestamp, for example `1736169814`).
+- a `/spec/terms-definitions/` directory containing definition files **(Standard Spec-Up-T directory)**
+- a `/docs/index.html` file containing a specification with the terms extracted from the source **(Standard Spec-Up-T directory)**
+- a `/sourceFilesConverted` *) directory containing new source files from which the definition has been extracted and containing links pointing to the new specification (TODO: the links are now hard-coded for a specific situation, this needs to be changed)
+- Inside `/sourceFilesConverted` you'll find a `latest` directory which contains the latest conversion, and an `archive` directory that contains a one time backup directory (`initialBackup`) and conversions made earlier (each in a directory consisting of a number, which is a Unix timestamp, for example `1736169814`) and `metadata.json`, which contains the metadata fetched from Google Sheets
+
+*) The name `/sourceFilesConverted` is defined in the `.env` file and can anything you want, as long as the directory does not exist yet.
 
 ## How to use the results
 
@@ -190,10 +193,10 @@ Make sure you are in the root of your project and not in a subdirectory, or outs
 Make sure you did not use quotes around the values in the `.env` file:
 
 Good:
-`TERMS_WOT_MANAGE_JSON_FILE_NAME=metadata.json`
+`WOTTERMSTOSPECUPT_OUTPUT_DIR=sourceFilesConverted`
 
 Wrong:
-`TERMS_WOT_MANAGE_JSON_FILE_NAME="metadata.json"`
+`WOTTERMSTOSPECUPT_OUTPUT_DIR="sourceFilesConverted"`
 
 ### Things to check
 
