@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import path, { join } from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
-import makeCopyOfWikiFiles from "./modules/makeCopyOfWikiFiles.mjs";
+import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
 import readline from 'readline';
 
 let sourceDirectoryPath = '';
@@ -154,8 +154,8 @@ function main() {
         return newContent;
     }
 
-    function removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile(filePath) {
-        // delete the first part of the file up to the second heading and write it to a new wiki file
+    function removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile(filePath) {
+        // delete the first part of the file up to the second heading and write it to a new source file
         try { 
             const fileContent = readFileSync(filePath, 'utf8');
             // // show only the file name
@@ -213,7 +213,6 @@ function main() {
 
     async function convertFiles(filePath) {
         try {
-            // console.log('filePath: ', filePath);
             // show only the file name
             const fileNameWithExt = filePath.split('/').pop();
             const fileNameWithoutExt = fileNameWithExt.split('.')[0];
@@ -279,21 +278,21 @@ function main() {
         // Empty the terms directory
         await fs.emptyDir(termsdir);
         
-        // Make a copy of the wiki files to a backup directory
-        await makeCopyOfWikiFiles(sourceDirectoryPath, "./sourceFilesConverted/archive/initialBackup", false);
+        // Make a copy of the source files to a backup directory
+        await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/archive/initialBackup", false);
         
-        // Make a copy of the wiki files to a new directory
-        await makeCopyOfWikiFiles(sourceDirectoryPath, "./sourceFilesConverted/latest", true);
+        // Make a copy of the source files to a new directory
+        await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/latest", true);
         
-        // remove First Heading Until Second Heading And Write To New Wiki File for each file in the sourceFilesConverted directory
-        await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewWikiFile);
+        // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
+        await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
 
         // Convert the files in the sourceFilesConverted directory
         await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, convertFiles);
 
         // create a unix timestamp of the current date and time
         const timestamp = Math.floor(Date.now() / 1000);
-        await makeCopyOfWikiFiles("./sourceFilesConverted/latest", `./sourceFilesConverted/archive/${timestamp}`, false);
+        await makeCopyOfSourceFiles("./sourceFilesConverted/latest", `./sourceFilesConverted/archive/${timestamp}`, false);
 
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
