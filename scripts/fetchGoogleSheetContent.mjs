@@ -26,13 +26,13 @@ if (!isRoot) {
 
 // CONFIG
 // How to create JSON endpoint from Google Sheet: https://stackoverflow.com/a/68854199
-const url = process.env.TERMS_WOT_MANAGE_JSON_ENDPOINT;
+const url = process.env.WOTTERMSTOSPECUPT_JSON_ENDPOINT;
 console.log('\nThe data will be fetched from this url:', url);
 
-const outputDirJSON = process.env.TERMS_WOT_MANAGE_JSON_DIR_NAME;
+const outputDirJSON = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
 console.log('\nThe output will be saved to:', outputDirJSON);
 
-const outputFileNameJSON = process.env.TERMS_WOT_MANAGE_JSON_FILE_NAME;
+const outputFileNameJSON = "metadata.json";
 console.log('\nThe output will be saved in a file called:', outputFileNameJSON);
 
 https

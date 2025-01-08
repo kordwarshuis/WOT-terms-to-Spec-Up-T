@@ -5,6 +5,8 @@ import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
 import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
 import readline from 'readline';
+import { config } from 'dotenv';
+config();
 
 let sourceDirectoryPath = '';
 
@@ -34,9 +36,14 @@ function main() {
     
     /* CONFIG */
     const fileExtension = '.md';
-    const googlesheetURL = './output/metadata.json';
+    
+    
+    
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
+    const outputDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
+    const googlesheetURL = `./${outputDir}/metadata.json`;
+    
     /* END CONFIG */
 
     if (!fs.existsSync(googlesheetURL)) {
@@ -275,25 +282,50 @@ function main() {
     }
 
     (async () => {
+        // // Empty the terms directory
+        // await fs.emptyDir(termsdir);
+        
+        // // Make a copy of the source files to a backup directory
+        // await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/archive/initialBackup", false);
+        
+        // // Make a copy of the source files to a new directory
+        // await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/latest", true);
+        
+        // // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
+        // await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
+
+        // // Convert the files in the sourceFilesConverted directory
+        // await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, convertFiles);
+
+        // const outputDir = "sourceFilesConverted";
+        // await processFilesInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
+
+        // // create a unix timestamp of the current date and time
+        // const timestamp = Math.floor(Date.now() / 1000);
+        // await makeCopyOfSourceFiles("./sourceFilesConverted/latest", `./sourceFilesConverted/archive/${timestamp}`, false);
+
+        // 
+
         // Empty the terms directory
         await fs.emptyDir(termsdir);
-        
+
         // Make a copy of the source files to a backup directory
-        await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/archive/initialBackup", false);
-        
+        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputDir}/archive/initialBackup`, false);
+
         // Make a copy of the source files to a new directory
-        await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/latest", true);
-        
+        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputDir}/latest`, true);
+
         // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
-        await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
+        await processFilesInDirectory(`./${outputDir}/latest`, fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
 
         // Convert the files in the sourceFilesConverted directory
-        await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, convertFiles);
+        await processFilesInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
 
         // create a unix timestamp of the current date and time
         const timestamp = Math.floor(Date.now() / 1000);
-        await makeCopyOfSourceFiles("./sourceFilesConverted/latest", `./sourceFilesConverted/archive/${timestamp}`, false);
+        await makeCopyOfSourceFiles(`./${outputDir}/latest`, `./${outputDir}/archive/${timestamp}`, false);
 
+        // 
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
