@@ -95,7 +95,7 @@ You will see several menu entries. Choose option 1 (render).
 
 ### Fetch meta info:
 
-Now fetch the meta-date via the following command:
+Now fetch the meta info (also called `metadata`) via the following command:
 
 ```bash
 npm run fetch
