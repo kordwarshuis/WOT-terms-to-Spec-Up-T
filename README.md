@@ -42,7 +42,7 @@ This is the content to be added to the `.env` file:
 ```bash
 #=== BEGIN FETCHING INFO FROM GOOGLE SHEET ===
 # WOT MANAGE GOOGLE SHEET JSON ENDPOINT
-WOTTERMSTOSPECUPT_JSON_ENDPOINT=https://sheets.googleapis.com/v4/spreadsheets/18IUa-1NSJ_8Tz_2D-VSuSQa_yf3ES1s_hovitm3Clvc/values/Terms-WOT-manage?alt=json&key=AIzaSyCA4sOfLTriHKjaQftREYWMnQNokDHf_tM
+WOTTERMSTOSPECUPT_JSON_ENDPOINT=*****
 
 WOTTERMSTOSPECUPT_OUTPUT_DIR=sourceFilesConverted
 #=== END FETCHING INFO FROM GOOGLE SHEET ===
