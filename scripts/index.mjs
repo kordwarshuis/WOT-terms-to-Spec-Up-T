@@ -4,6 +4,7 @@ import path, { join } from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
 import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
 import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
+import { showLinkToDocumentation } from './modules/showLinkToDocumentation.mjs';
 import readline from 'readline';
 import { config } from 'dotenv';
 config();
@@ -17,6 +18,8 @@ if (!isRoot) {
     console.error('\nThis script should be run from the root of the project\nPlease go to the root of the project and try again.\n');
     process.exit(1);
 }
+
+showLinkToDocumentation();
 
 
 const rl = readline.createInterface({

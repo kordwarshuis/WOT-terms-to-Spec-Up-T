@@ -14,6 +14,7 @@ import path, { join } from 'path';
 import https from 'https';
 import { config } from 'dotenv';
 config();
+import { showLinkToDocumentation } from './modules/showLinkToDocumentation.mjs';
 
 
 // This script should be run from the root of the project, let's check if we are in the right directory
@@ -23,6 +24,8 @@ if (!isRoot) {
     console.error('\nThis script should be run from the root of the project\nPlease go to the root of the project and try again.\n');
     process.exit(1);
 }
+
+showLinkToDocumentation();
 
 // CONFIG
 // How to create JSON endpoint from Google Sheet: https://stackoverflow.com/a/68854199
