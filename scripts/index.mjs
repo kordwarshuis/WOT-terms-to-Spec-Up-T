@@ -43,7 +43,7 @@ function main() {
     
     
     const config = fs.readJsonSync('./output/specs-generated.json');
-    const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
+    const termsDir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     const outputDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
     const metadataJsonLocation = `./${outputDir}/metadata.json`;
     
@@ -240,7 +240,7 @@ function main() {
             */
             if (fileInToIP_FkeyValues) {
                 let fileContent = readFileSync(filePath, 'utf8');
-                const newFilePath = path.join(termsdir, path.basename(filePath));
+                const newFilePath = path.join(termsDir, path.basename(filePath));
                 console.log('newFilePath XYXYXYYXYXY: ', newFilePath);
 
                 if (isAliasTrue(fileNameWithoutExt)) {
@@ -291,7 +291,7 @@ function main() {
 
     (async () => {
         // Empty the terms directory
-        await fs.emptyDir(termsdir);
+        await fs.emptyDir(termsDir);
 
         // Make a copy of the source files to a backup directory
         await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputDir}/archive/initialBackup`, false);
