@@ -14,7 +14,7 @@ async function copyFiles(sourceDir, targetDir, overwrite) {
 
         if (fs.existsSync(targetDir) && !overwrite) {
             console.log(`
-Copying ${sourceDir} to ${targetDir}: Target directory already exists, and therefore we do not copy files.
+Copying ${sourceDir} to ${targetDir}: There is already an initial backup in ${targetDir}. So we will skip this step and continue with the next step.
 `);
             return
         }
