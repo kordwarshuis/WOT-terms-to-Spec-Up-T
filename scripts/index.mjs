@@ -73,7 +73,7 @@ function main() {
     function isAliasTrue(fName) {
         let aliasValue = false;
 
-        // Iterate over each row in googlesheetValues, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
+        // Iterate over each row in objMetadata, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
         objMetadata.forEach((row, index) => {
             // Skip the header row
             if (index > 0) {
@@ -93,7 +93,7 @@ function main() {
     function findTerm(fName) {
         let term = '';
 
-        // Iterate over each row in googlesheetValues, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
+        // Iterate over each row in objMetadata, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
         objMetadata.forEach((row, index) => {
             // Skip the header row
             if (index > 0) {
