@@ -221,6 +221,7 @@ function main() {
         return newContent;
     }
 
+    // This function will be called for each file in the sourceFilesConverted directory via processFilesWithExtensionInDirectory. The files are already copied to the new directory (filePath) and now we are going to convert them. The first part, the definition has to be taken out and moved to a new file in the /spec/terms-definition directory. The rest of the content will stay. Also there will be links in both files to each other.
     async function convertFiles(filePath) {
         try {
             // show only the file name
