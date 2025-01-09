@@ -45,15 +45,15 @@ function main() {
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     const outputDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
-    const googlesheetURL = `./${outputDir}/metadata.json`;
+    const metadataJson = `./${outputDir}/metadata.json`;
     
     /* END CONFIG */
 
-    if (!fs.existsSync(googlesheetURL)) {
-        console.log(`Warning: The file ${googlesheetURL} does not exist. Run “npm run fetch” first, to fetch the metadata.`);
+    if (!fs.existsSync(metadataJson)) {
+        console.log(`Warning: The file ${metadataJson} does not exist. Run “npm run fetch” first, to fetch the metadata.`);
         return;
     }
-    const googlesheet = readFileSync(googlesheetURL);
+    const googlesheet = readFileSync(metadataJson);
 
     const appendFileAsync = promisify(appendFile);
     const googlesheetValues = JSON.parse(googlesheet).values;
