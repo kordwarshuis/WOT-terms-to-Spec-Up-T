@@ -224,6 +224,9 @@ function main() {
     // This function will be called for each file in the sourceFilesConverted directory via processFilesWithExtensionInDirectory. The files are already copied to the new directory (filePath) and now we are going to convert them. The first part, the definition has to be taken out and moved to a new file in the /spec/terms-definition directory. The rest of the content will stay. Also there will be links in both files to each other.
     async function convertFiles(filePath) {
         try {
+
+            // Compare the file name with the ToIP_Fkey values in the metadata
+
             // show only the file name
             const fileNameWithExt = filePath.split('/').pop();
             const fileNameWithoutExt = fileNameWithExt.split('.')[0];
@@ -232,23 +235,24 @@ function main() {
             const fileInToIP_FkeyValues = allToIP_FkeyValues.includes(fileNameWithoutExt);
 
 
-            /* IF ( ToIP_Fkey matcht met een .md file in de TermsDir met exact dezelfde naam ) THEN
-                File onder exact dezelfde naam wegschrijven naar directory TermsDirResult 
+            /* IF ( ToIP_Fkey matches a .md file in the TermsDir with the exact same name ) THEN
+                Write file under the exact same name to directory TermsDirResult 
             */
             if (fileInToIP_FkeyValues) {
                 let fileContent = readFileSync(filePath, 'utf8');
                 const newFilePath = path.join(termsdir, path.basename(filePath));
+                console.log('newFilePath XYXYXYYXYXY: ', newFilePath);
 
                 if (isAliasTrue(fileNameWithoutExt)) {
                     /*
-                        In de file zetten  [[def: term, alias]]  (term=de filenaam zonder .md. De Alias is die in het 'Term' field staat in de sheet)
+                        In the file put [[def: term, alias]] (term=the filename without .md. The Alias is the one in the 'Term' field in the sheet)
                     */
 
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
                     fileContent = `[[def: ${fileNameWithoutExt}, ${findTermInObjMetadata(fileNameWithoutExt)}]]\n` + fileContent;
                 } else {
                     /* 
-                        anders [[def: term, alias]] (alias is de naam van de file zonder '-', door de '-' te vervangen door een spatie)
+                        else [[def: term, alias]] (alias is the name of the file without '-', replacing the '-' with a space)
                     */
 
                     let fileNameWithoutExtNoDash = fileNameWithoutExt.replace(/-/g, ' ');
