@@ -285,30 +285,6 @@ function main() {
     }
 
     (async () => {
-        // // Empty the terms directory
-        // await fs.emptyDir(termsdir);
-        
-        // // Make a copy of the source files to a backup directory
-        // await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/archive/initialBackup", false);
-        
-        // // Make a copy of the source files to a new directory
-        // await makeCopyOfSourceFiles(sourceDirectoryPath, "./sourceFilesConverted/latest", true);
-        
-        // // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
-        // await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
-
-        // // Convert the files in the sourceFilesConverted directory
-        // await processFilesInDirectory("./sourceFilesConverted/latest", fileExtension, convertFiles);
-
-        // const outputDir = "sourceFilesConverted";
-        // await processFilesInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
-
-        // // create a unix timestamp of the current date and time
-        // const timestamp = Math.floor(Date.now() / 1000);
-        // await makeCopyOfSourceFiles("./sourceFilesConverted/latest", `./sourceFilesConverted/archive/${timestamp}`, false);
-
-        // 
-
         // Empty the terms directory
         await fs.emptyDir(termsdir);
 
@@ -327,8 +303,6 @@ function main() {
         // create a unix timestamp of the current date and time
         const timestamp = Math.floor(Date.now() / 1000);
         await makeCopyOfSourceFiles(`./${outputDir}/latest`, `./${outputDir}/archive/${timestamp}`, false);
-
-        // 
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
