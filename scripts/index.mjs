@@ -45,25 +45,25 @@ function main() {
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsdir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     const outputDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
-    const metadataJson = `./${outputDir}/metadata.json`;
+    const metadataJsonLocation = `./${outputDir}/metadata.json`;
     
     /* END CONFIG */
 
-    if (!fs.existsSync(metadataJson)) {
-        console.log(`Warning: The file ${metadataJson} does not exist. Run “npm run fetch” first, to fetch the metadata.`);
+    if (!fs.existsSync(metadataJsonLocation)) {
+        console.log(`Warning: The file ${metadataJsonLocation} does not exist. Run “npm run fetch” first, to fetch the metadata.`);
         return;
     }
-    const googlesheet = readFileSync(metadataJson);
-
+    const jsonMetadata = readFileSync(metadataJsonLocation);
+    
     const appendFileAsync = promisify(appendFile);
-    const googlesheetValues = JSON.parse(googlesheet).values;
-    const indexOfToIP_Fkey = googlesheetValues[0].indexOf('ToIP_Fkey');
-    const indexOfAlias = googlesheetValues[0].indexOf('Alias');
-    const indexOfTerm = googlesheetValues[0].indexOf('Term');
+    const objMetadata = JSON.parse(jsonMetadata).values;
+    const indexOfToIP_Fkey = objMetadata[0].indexOf('ToIP_Fkey');
+    const indexOfAlias = objMetadata[0].indexOf('Alias');
+    const indexOfTerm = objMetadata[0].indexOf('Term');
     let allToIP_FkeyValues = [];
     let numberOfMissingMatches = 0;
 
-    googlesheetValues.forEach((row, index) => {
+    objMetadata.forEach((row, index) => {
         if (index > 0) {
             const ToIP_FkeyValue = row[indexOfToIP_Fkey];
             allToIP_FkeyValues.push(ToIP_FkeyValue);
@@ -74,7 +74,7 @@ function main() {
         let aliasValue = false;
 
         // Iterate over each row in googlesheetValues, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
-        googlesheetValues.forEach((row, index) => {
+        objMetadata.forEach((row, index) => {
             // Skip the header row
             if (index > 0) {
                 // Check if the ToIP_Fkey column matches fName
@@ -94,7 +94,7 @@ function main() {
         let term = '';
 
         // Iterate over each row in googlesheetValues, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
-        googlesheetValues.forEach((row, index) => {
+        objMetadata.forEach((row, index) => {
             // Skip the header row
             if (index > 0) {
                 // Check if the ToIP_Fkey column matches fName
