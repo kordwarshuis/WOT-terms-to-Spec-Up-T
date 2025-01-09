@@ -241,7 +241,6 @@ function main() {
             if (fileInToIP_FkeyValues) {
                 let fileContent = readFileSync(filePath, 'utf8');
                 const termsDirPath = path.join(termsDir, path.basename(filePath));
-                console.log('newFilePath XYXYXYYXYXY: ', termsDirPath);
 
                 if (isAliasTrue(fileNameWithoutExt)) {
                     /*
