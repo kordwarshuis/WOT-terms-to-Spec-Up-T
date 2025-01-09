@@ -90,7 +90,7 @@ function main() {
 
         return aliasValue;
     }
-    function findTerm(fName) {
+    function findTermInObjMetadata(fName) {
         let term = '';
 
         // Iterate over each row in objMetadata, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
@@ -244,7 +244,7 @@ function main() {
                     */
 
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
-                    fileContent = `[[def: ${fileNameWithoutExt}, ${findTerm(fileNameWithoutExt)}]]\n` + fileContent;
+                    fileContent = `[[def: ${fileNameWithoutExt}, ${findTermInObjMetadata(fileNameWithoutExt)}]]\n` + fileContent;
                 } else {
                     /* 
                         anders [[def: term, alias]] (alias is de naam van de file zonder '-', door de '-' te vervangen door een spatie)
