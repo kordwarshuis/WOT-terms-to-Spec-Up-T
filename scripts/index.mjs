@@ -2,7 +2,7 @@ import { readFileSync, appendFile, existsSync } from 'fs';
 import { promisify } from 'util';
 import path, { join } from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
-import processFilesInDirectory from "./modules/processFilesInDirectory.mjs";
+import processFilesWithExtensionInDirectory from "./modules/processFilesWithExtensionInDirectory.mjs";
 import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
 import { showLinkToDocumentation } from './modules/showLinkToDocumentation.mjs';
 import readline from 'readline';
@@ -295,10 +295,10 @@ function main() {
         await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputDir}/latest`, true);
 
         // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
-        await processFilesInDirectory(`./${outputDir}/latest`, fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
+        await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
 
         // Convert the files in the sourceFilesConverted directory
-        await processFilesInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
+        await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
 
         // create a unix timestamp of the current date and time
         const timestamp = Math.floor(Date.now() / 1000);

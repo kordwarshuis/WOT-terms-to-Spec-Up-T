@@ -8,7 +8,7 @@ import path from 'path';
  * @param {function} func - The function to run on each file.
  * @returns {Promise<void>}
  */
-async function processFilesInDirectory(dir, ext, func) {
+async function processFilesWithExtensionInDirectory(dir, ext, func) {
     try {
         const files = await fs.promises.readdir(dir);
         const promises = files.map(async (file) => {
@@ -24,4 +24,4 @@ async function processFilesInDirectory(dir, ext, func) {
     }
 }
 
-export default processFilesInDirectory;
+export default processFilesWithExtensionInDirectory;
