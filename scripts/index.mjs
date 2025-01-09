@@ -240,8 +240,8 @@ function main() {
             */
             if (fileInToIP_FkeyValues) {
                 let fileContent = readFileSync(filePath, 'utf8');
-                const newFilePath = path.join(termsDir, path.basename(filePath));
-                console.log('newFilePath XYXYXYYXYXY: ', newFilePath);
+                const termsDirPath = path.join(termsDir, path.basename(filePath));
+                console.log('newFilePath XYXYXYYXYXY: ', termsDirPath);
 
                 if (isAliasTrue(fileNameWithoutExt)) {
                     /*
@@ -277,7 +277,7 @@ function main() {
                 fileContent += `\nMore in <a href="https://weboftrust.github.io/WOT-terms/docs/glossary/${fileNameWithoutExt}">extended KERI glossary</a>`
 
                 // Conversion to Spec-Up-T: Write the updated content to the new file
-                await appendFileAsync(newFilePath, fileContent);
+                await appendFileAsync(termsDirPath, fileContent);
             } else {
                 console.log(`File not found in ToIP_Fkey: ${fileNameWithoutExt}`);
                 numberOfMissingMatches++;
