@@ -93,7 +93,7 @@ npm run menu
 
 You will see several menu entries. Choose option 1 (render).
 
-### Fetch meta info:
+### Fetch meta info
 
 Now fetch the meta info (also called `metadata`) via the following command:
 
@@ -133,7 +133,7 @@ There should be an `index.html` in the `docs/` directory. This is the specificat
 
 If everything went as planned, you should now have the following (after running a few times):
 
-```
+```bash
 docs
   |_ index.html
 
@@ -163,7 +163,6 @@ spec
       term2.md
       term3.md
 ```
-
 
 - a `/spec/terms-definitions/` directory containing definition files **(Standard Spec-Up-T directory)**
 - a `/docs/index.html` file containing a specification with the terms extracted from the source **(Standard Spec-Up-T directory)**
@@ -205,7 +204,6 @@ Wrong:
 - internet working?
 - firewalls blocking?
 - corrupted meta data (columns inserted, column names changed, etc )
-
 
 ## FAQ
 
