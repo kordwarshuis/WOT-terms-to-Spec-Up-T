@@ -44,8 +44,8 @@ function main() {
     
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsDir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
-    const outputDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
-    const metadataJsonLocation = `./${outputDir}/metadata.json`;
+    const outputMinusTermsDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
+    const metadataJsonLocation = `./${outputMinusTermsDir}/metadata.json`;
     
     /* END CONFIG */
 
@@ -163,14 +163,37 @@ function main() {
         const newContent = result.join('\n');
         return newContent;
     }
+    
+    async function createNewContentFromSource(filePath) {
+        console.log('wat is nou filePath: ', filePath);
+        function ensureNewlineAfterPattern(fileContent) {
+            const pattern = '## See ';
+            const lines = fileContent.split('\n');
+            let result = [];
 
-    function removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile(filePath) {
-        // delete the first part of the file up to the second heading and write it to a new source file
+            for (let line of lines) {
+                // if after pattern is more content, add a newline after the pattern
+                if (line.startsWith(pattern) && line.length > pattern.length) {
+                    result.push(pattern);
+                    result.push(line.slice(pattern.length));
+                } else {
+                    result.push(line);
+                }
+            }
+
+            const newContent = result.join('\n');
+            return newContent;
+        }
+
         try { 
+            // removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile
+
             const fileContent = readFileSync(filePath, 'utf8');
-            // // show only the file name
+            
+            // show only the file name
             const fileNameWithExt = filePath.split('/').pop();
             const fileNameWithoutExt = fileNameWithExt.split('.')[0];
+            
             const lines = fileContent.split('\n');
             let headingCount = 0;
             let result = [];
@@ -195,41 +218,11 @@ function main() {
             fs.writeFile(filePath, newContent, (err) => {
                 if (err) throw err;
             });
-            
-        } catch (err
-        ) {
-            console.error(`${filePath}`, err);
-        }
-    }
 
-    function ensureNewlineAfterPattern(fileContent) {
-        const pattern = '## See ';
-        const lines = fileContent.split('\n');
-        let result = [];
-
-        for (let line of lines) {
-            // if after pattern is more content, add a newline after the pattern
-            if (line.startsWith(pattern) && line.length > pattern.length) {
-                result.push(pattern);
-                result.push(line.slice(pattern.length));
-            } else {
-                result.push(line);
-            }
-        }
-
-        const newContent = result.join('\n');
-        return newContent;
-    }
-
-    // This function will be called for each file in the sourceFilesConverted directory via processFilesWithExtensionInDirectory. The files are already copied to the new directory (filePath) and now we are going to convert them. The first part, the definition has to be taken out and moved to a new file in the /spec/terms-definition directory. The rest of the content will stay. Also there will be links in both files to each other.
-    async function convertFiles(filePath) {
-        try {
+            // convertFiles
 
             // Compare the file name with the ToIP_Fkey values in the metadata
 
-            // show only the file name
-            const fileNameWithExt = filePath.split('/').pop();
-            const fileNameWithoutExt = fileNameWithExt.split('.')[0];
 
             // test if file is in allToIP_FkeyValues
             const fileInToIP_FkeyValues = allToIP_FkeyValues.includes(fileNameWithoutExt);
@@ -255,7 +248,7 @@ function main() {
                     */
 
                     let fileNameWithoutExtNoDash = fileNameWithoutExt.replace(/-/g, ' ');
-                    
+
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
                     fileContent = `[[def: ${fileNameWithoutExt}, ${fileNameWithoutExtNoDash}]]\n` + fileContent;
                 }
@@ -282,31 +275,39 @@ function main() {
                 numberOfMissingMatches++;
             }
 
-            // console.log(`Successfully appended to file: ${filePath}`);
+
+
+
+
         } catch (err) {
-            console.error(`Error appending to file: ${filePath}`, err);
+            console.error(`${filePath}`, err);
         }
+    
     }
+
+
 
     (async () => {
         // Empty the terms directory
         await fs.emptyDir(termsDir);
 
         // Make a copy of the source files to a backup directory
-        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputDir}/archive/initialBackup`, false);
+        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputMinusTermsDir}/archive/initialBackup`, false);
 
         // Make a copy of the source files to a new directory
-        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputDir}/latest`, true);
+        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputMinusTermsDir}/latest`, true);
 
-        // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
-        await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
+        // // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
+        // await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
 
-        // Convert the files in the sourceFilesConverted directory
-        await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
+        // // Convert the files in the sourceFilesConverted directory
+        // await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
 
+        await processFilesWithExtensionInDirectory(`./${outputMinusTermsDir}/latest`, fileExtension, createNewContentFromSource);
+        
         // create a unix timestamp of the current date and time
         const timestamp = Math.floor(Date.now() / 1000);
-        await makeCopyOfSourceFiles(`./${outputDir}/latest`, `./${outputDir}/archive/${timestamp}`, false);
+        await makeCopyOfSourceFiles(`./${outputMinusTermsDir}/latest`, `./${outputMinusTermsDir}/archive/${timestamp}`, false);
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
