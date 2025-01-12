@@ -34,9 +34,17 @@ showLinkToDocumentation();
     if (!outputExists) {
         // Run Spec-Up-T render so that the new files are included in the output and we have an index.html file.
         if (typeof specUpT === 'function') {
-            specUpT({ nowatch: true });
+            await new Promise((resolve, reject) => {
+                try {
+                    specUpT({ nowatch: true });
+                    resolve();
+                } catch (error) {
+                    reject(error);
+                }
+            });
         } else {
             console.error('specUpT is not defined or is not a function.');
+            return;
         }
     }
 
