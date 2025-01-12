@@ -10,10 +10,7 @@ import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
 import { showLinkToDocumentation } from './modules/showLinkToDocumentation.mjs';
 import testIfOutputPathExists from './modules/testIfOutputPathExists.mjs';
 
-
-
-// import specUpT from 'spec-up-t';
-import specUpT from '/Users/kor/webdev/Blockchain-Bird/KERI/Spec-Up/active/spec-up-t/spec-up-t/index.js';
+import specUpT from 'spec-up-t';
 
 let sourceDirectoryPath = '';
 
