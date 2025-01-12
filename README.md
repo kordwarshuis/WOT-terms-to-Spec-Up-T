@@ -11,10 +11,9 @@ This script uses Spec-Up-T, see [documentation about Spec-Up-T](https://trustove
 
 Requirements:
 
-- Source files. Example: A local clone of your GitHub Wiki that is in a clean state. By this, we mean that when you query Git status (via `git status`), you read, “Nothing to commit.”
-- Be sure to git fetch & git merge or git pull your latest source version from github.com or locally if maintained locally
-- A Google Sheet that holds meta data about the terms in the source
-- A Spec-Up-T installation that will host the definitions you extract from the source. [Installation Instructions](https://trustoverip.github.io/spec-up-t-website/docs/general/installation)
+- **Source files**. Example: A local clone of your GitHub Wiki that is in a clean state. By this, we mean that when you query Git status (via `git status`), you read, “Nothing to commit.” Be sure to git fetch & git merge or git pull your latest source version from github.com or locally if maintained locally
+- A **Google Sheet** that holds meta data about the terms in the source
+- A **Spec-Up-T installation** that will host the definitions you extract from the source. [Installation Instructions](https://trustoverip.github.io/spec-up-t-website/docs/general/installation)
 - an NPM package called `wottermstospecupt` that you will install in the above mentioned Spec-Up-T installation
 
 ## How to use: overview
