@@ -65,7 +65,7 @@ Add two entries to your `scripts` section in `package.json` (the order of the en
 
 ```json
 "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
-"convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
+"convert": "node --interactive wottermstospecupt/scripts/index.mjs"
 "create-repo": "node -e \"import('wottermstospecupt/scripts/create-repo.js')\""
 ```
 
@@ -75,7 +75,7 @@ This should be the endresult:
 "scripts": {
     // ... other scripts ...
     "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
-    "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
+    "convert": "node --interactive wottermstospecupt/scripts/index.mjs"
     "create-repo": "node -e \"import('wottermstospecupt/scripts/create-repo.js')\""
     // ... other scripts ...
   }
