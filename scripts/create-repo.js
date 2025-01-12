@@ -117,36 +117,37 @@ const runGitCommand = (command, successMessage) => {
                     private: false,
                 });
 
-                const req = https.request(options, async (res) => {
-                    res.on('data', (d) => {
-                        process.stdout.write(d);
+                const req = https.request(options, (res) => {
+                    let responseData = '';
+
+                    res.on('data', (chunk) => {
+                        responseData += chunk;
                     });
 
-                    if (res.statusCode === 201) {
-                        console.log('\n✅ Repository created successfully on GitHub!\n');
+                    res.on('end', async () => {
+                        const response = JSON.parse(responseData);
 
-                        // Run Git commands with better error handling
-                        try {
-                            // await runGitCommand('git init', 'Initialized a new Git repository locally.');
-                            // Add all files to the staging area
-                            execSync('git add .');
-                            console.log('\n✅ Added all files to the staging area.');
+                        if (res.statusCode === 201) {
+                            console.log('\n✅ Repository created successfully on GitHub!');
+                            console.log(`🔗 Repository URL: ${response.html_url}`);
 
-                            // Commit the files
-                            execSync('git commit -m "Initial commit"');
-                            console.log('\n✅ Committed the files.');
-                            await runGitCommand(`git remote add origin https://github.com/${username}/${repoName}.git`, 'Set the remote URL.');
-                            console.log('\n✅ Set the remote URL to the new repository on GitHub.');
-                            await runGitCommand('git branch -M main', 'Renamed the branch to "main".');
-                            console.log('\n✅ Renamed the branch to "main".');
-                            await runGitCommand('git push -u origin main', 'Pushed the initial commit to GitHub.');
-                            console.log('\n✅ Pushed the initial commit to the main branch on GitHub.');
-                        } catch (error) {
-                            console.error('❌ An error occurred while running Git commands.');
+                            // Run Git commands with better error handling
+                            try {
+                                await runGitCommand('git init', 'Initialized a new Git repository locally.');
+                                await runGitCommand('git add .', 'Added all files to the staging area.');
+                                await runGitCommand('git commit -m "Initial commit"', 'Committed the files.');
+                                await runGitCommand(`git remote add origin https://github.com/${username}/${repoName}.git`, 'Set the remote URL to the new repository on GitHub.');
+                                await runGitCommand('git branch -M main', 'Renamed the branch to "main".');
+                                await runGitCommand('git push -u origin main', 'Pushed the initial commit to the main branch on GitHub.');
+                                console.log('\n✅ All Git commands executed successfully!');
+                            } catch (error) {
+                                console.error('❌ An error occurred while running Git commands.');
+                            }
+                        } else {
+                            console.error('\n❌ Failed to create the repository on GitHub.');
+                            console.error(`⚠️ Response: ${response.message}`);
                         }
-                    } else {
-                        console.error('\n❌ Failed to create the repository on GitHub.');
-                    }
+                    });
                 });
 
                 req.on('error', (error) => {
@@ -160,3 +161,4 @@ const runGitCommand = (command, successMessage) => {
         });
     });
 })();
+
