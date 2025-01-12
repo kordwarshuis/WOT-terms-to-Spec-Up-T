@@ -27,8 +27,7 @@ The input is:
 The output is (in your Spec-Up-T installation):
 
 - new files in the directory `/spec/terms-definitions/` (or another location if you deliberately set it that way)
-- a directory called “sourceFilesConverted
-”, which contains the edited source files, which you have to bring back to the source
+- a directory called “sourceFilesConverted” (or a name of your choice, see the `.env` part below), which contains the edited source files, which you have to bring back to the source
 
 ## How to use: detailed
 
