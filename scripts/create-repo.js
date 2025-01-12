@@ -1,4 +1,3 @@
-const readline = require('readline');
 const https = require('https');
 const { exec } = require('child_process');
 
@@ -7,7 +6,7 @@ console.log(`
 -----------------------------------------------
 🔧 GitHub Repository Creator Script (Node.js)
 -----------------------------------------------
-This script helps you create a new GitHub repository directly from the command line.
+This script helps you create a new GitHub repository directly from the command line and push your local content to it.
 
 👉 What you'll need:
 1. Your GitHub username or organization name.
@@ -15,13 +14,23 @@ This script helps you create a new GitHub repository directly from the command l
 3. Whether the repository is for a personal account or an organization.
 4. Your GitHub Personal Access Token (PAT) or password.
 
-Note: 
+📝 What this script does:
+- It creates a new repository on GitHub (either for your personal account or an organization).
+- It initializes a local Git repository in the current folder.
+- It sets the remote origin to the newly created GitHub repository.
+- It pushes your local content to the main branch on GitHub.
+
+💡 Note:
 - If you use 2FA on your GitHub account, you'll need to enter a Personal Access Token (PAT).
 - The input for your token/password will be hidden for security.
+
+⚠️ Make sure you're running this script from the folder you want to push to GitHub!
+⚠️ Best Practice: Keep the Local Folder Name Consistent with the Remote Repo.
 -----------------------------------------------
+
 `);
 
-// Function to ask for input securely (hides password/token)
+// Function to ask for hidden input (password or PAT)
 const askHiddenInput = (question) => {
     return new Promise((resolve) => {
         process.stdout.write(question);
@@ -45,7 +54,6 @@ const askHiddenInput = (question) => {
         process.stdin.resume();
     });
 };
-
 
 // Function to determine if the input is a PAT or a password
 const isPAT = (input) => {
@@ -71,20 +79,25 @@ const runGitCommand = (command, successMessage) => {
 
 // Main function
 (async () => {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
+    process.stdout.write('Enter your GitHub username or organization: ');
+    process.stdin.resume();
+    process.stdin.once('data', async (usernameBuffer) => {
+        const username = usernameBuffer.toString().trim();
 
-    rl.question('Enter your GitHub username or organization: ', async (username) => {
-        rl.question('Enter the name of the new repository: ', async (repoName) => {
-            rl.question('Is this repo for an organization? (yes/no): ', async (isOrg) => {
+        process.stdout.write('Enter the name of the new repository: ');
+        process.stdin.once('data', async (repoNameBuffer) => {
+            const repoName = repoNameBuffer.toString().trim();
+
+            process.stdout.write('Is this repo for an organization? (yes/no): ');
+            process.stdin.once('data', async (isOrgBuffer) => {
+                const isOrg = isOrgBuffer.toString().trim();
+
                 const tokenOrPassword = await askHiddenInput('Enter your GitHub Personal Access Token (or password): ');
 
                 const authType = isPAT(tokenOrPassword) ? 'token' : 'password';
 
                 // Choose the API endpoint
-                const endpoint = isOrg === 'yes'
+                const endpoint = isOrg.toLowerCase() === 'yes'
                     ? `/orgs/${username}/repos`
                     : '/user/repos';
 
@@ -133,8 +146,6 @@ const runGitCommand = (command, successMessage) => {
 
                 req.write(data);
                 req.end();
-
-                rl.close();
             });
         });
     });
