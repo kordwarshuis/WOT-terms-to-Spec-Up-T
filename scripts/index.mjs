@@ -35,18 +35,14 @@ rl.question('\n\n\n********************\n\nPlease enter the path to the source d
 });
 
 
-function main() { 
-    
+function main() {
+
     /* CONFIG */
     const fileExtension = '.md';
-    
-    
-    
     const config = fs.readJsonSync('./output/specs-generated.json');
     const termsDir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     const outputMinusTermsDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
     const metadataJsonLocation = `./${outputMinusTermsDir}/metadata.json`;
-    
     /* END CONFIG */
 
     if (!fs.existsSync(metadataJsonLocation)) {
@@ -54,7 +50,7 @@ function main() {
         return;
     }
     const jsonMetadata = readFileSync(metadataJsonLocation);
-    
+
     const appendFileAsync = promisify(appendFile);
     const objMetadata = JSON.parse(jsonMetadata).values;
     const indexOfToIP_Fkey = objMetadata[0].indexOf('ToIP_Fkey');
@@ -145,7 +141,7 @@ function main() {
             .join('\n'); // Join the lines back together
     }
 
-    function removeEverythingAfterSecondHeading(fileContent) { 
+    function removeEverythingAfterSecondHeading(fileContent) {
         const lines = fileContent.split('\n');
         let headingCount = 0;
         let result = [];
@@ -163,67 +159,64 @@ function main() {
         const newContent = result.join('\n');
         return newContent;
     }
-    
-    async function createNewContentFromSource(filePath) {
-        console.log('wat is nou filePath: ', filePath);
-        function ensureNewlineAfterPattern(fileContent) {
-            const pattern = '## See ';
-            const lines = fileContent.split('\n');
-            let result = [];
 
-            for (let line of lines) {
-                // if after pattern is more content, add a newline after the pattern
-                if (line.startsWith(pattern) && line.length > pattern.length) {
-                    result.push(pattern);
-                    result.push(line.slice(pattern.length));
-                } else {
-                    result.push(line);
-                }
+    function ensureNewlineAfterPattern(fileContent) {
+        const pattern = '## See ';
+        const lines = fileContent.split('\n');
+        let result = [];
+
+        for (let line of lines) {
+            // if after pattern is more content, add a newline after the pattern
+            if (line.startsWith(pattern) && line.length > pattern.length) {
+                result.push(pattern);
+                result.push(line.slice(pattern.length));
+            } else {
+                result.push(line);
             }
-
-            const newContent = result.join('\n');
-            return newContent;
         }
 
-        try { 
-            // removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile
+        const newContent = result.join('\n');
+        return newContent;
+    }
 
-            const fileContent = readFileSync(filePath, 'utf8');
-            
+    async function createNewContentFromSource(sourceFilePath) {
+        try {
+            const sourceFileContent = readFileSync(sourceFilePath, 'utf8');
+
             // show only the file name
-            const fileNameWithExt = filePath.split('/').pop();
+            const fileNameWithExt = sourceFilePath.split('/').pop();
             const fileNameWithoutExt = fileNameWithExt.split('.')[0];
-            
-            const lines = fileContent.split('\n');
+
+            const lines = sourceFileContent.split('\n');
             let headingCount = 0;
-            let result = [];
-            let skip = false;
-            result.push(`## Term Definition\n\nSpec-Up-T link: <a href='https://weboftrust.github.io/WOT-terms/docs/glossary/${fileNameWithoutExt}'>here</a>\n`);
+            let outputMinusTerm = [];
+            let outputTerm = [];
+            let pushToTerm = true;
+
+            outputMinusTerm.push(`## Term Definition\n\nSpec-Up-T link: <a href='https://weboftrust.github.io/WOT-terms/docs/glossary/${fileNameWithoutExt}'>here</a>\n`);
             for (let line of lines) {
                 if (/^#+\s/.test(line)) {
                     headingCount++;
                     if (headingCount === 1) {
-                        skip = true;
+                        pushToTerm = true;
+                        outputTerm.push(line);  // Add first heading
                     } else if (headingCount === 2) {
-                        skip = false;
+                        pushToTerm = false;
+                        outputMinusTerm.push(line);  // Add second heading
                     }
-                }
-                if (!skip) {
-                    result.push(line);
+                } else {
+                    if (pushToTerm) {
+                        outputTerm.push(line);  // Everything after first heading until second heading
+                    } else {
+                        outputMinusTerm.push(line);  // Everything after second heading
+                    }
                 }
             }
 
-            const newContent = result.join('\n');
-
-            fs.writeFile(filePath, newContent, (err) => {
-                if (err) throw err;
-            });
-
-            // convertFiles
+            const outputTermContent = outputTerm.join('\n');
+            const outputMinusTermContent = outputMinusTerm.join('\n');
 
             // Compare the file name with the ToIP_Fkey values in the metadata
-
-
             // test if file is in allToIP_FkeyValues
             const fileInToIP_FkeyValues = allToIP_FkeyValues.includes(fileNameWithoutExt);
 
@@ -232,8 +225,26 @@ function main() {
                 Write file under the exact same name to directory TermsDirResult 
             */
             if (fileInToIP_FkeyValues) {
-                let fileContent = readFileSync(filePath, 'utf8');
-                const termsDirPath = path.join(termsDir, path.basename(filePath));
+
+                // 1 of 2: Write outputMinusTermContent to the original files minus the term
+                const latestFilePath = path.join(outputMinusTermsDir, 'latest', fileNameWithExt);
+
+                // Ensure the directory exists
+                fs.mkdir(path.dirname(latestFilePath), { recursive: true }, (err) => {
+                    if (err) throw err;
+
+                    // Write the file
+                    fs.writeFile(latestFilePath, outputMinusTermContent, { flag: 'w' }, (err) => {
+                        if (err) throw err;
+                        console.log('File created/updated successfully at:', latestFilePath);
+                    });
+                });
+
+                // 2 of 2: Write outputTermContent to the terms directory
+                let outputTermContentProcessed = outputTermContent;
+
+                // The path to the file in the terms directory
+                const termsDirPath = path.join(termsDir, path.basename(sourceFilePath));
 
                 if (isAliasTrue(fileNameWithoutExt)) {
                     /*
@@ -241,7 +252,7 @@ function main() {
                     */
 
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
-                    fileContent = `[[def: ${fileNameWithoutExt}, ${findTermInObjMetadata(fileNameWithoutExt)}]]\n` + fileContent;
+                    outputTermContentProcessed = `[[def: ${fileNameWithoutExt}, ${findTermInObjMetadata(fileNameWithoutExt)}]]\n` + outputTermContentProcessed;
                 } else {
                     /* 
                         else [[def: term, alias]] (alias is the name of the file without '-', replacing the '-' with a space)
@@ -250,70 +261,62 @@ function main() {
                     let fileNameWithoutExtNoDash = fileNameWithoutExt.replace(/-/g, ' ');
 
                     // Conversion to Spec-Up-T: Add the [[def: term]] reference at the beginning of the file
-                    fileContent = `[[def: ${fileNameWithoutExt}, ${fileNameWithoutExtNoDash}]]\n` + fileContent;
+                    outputTermContentProcessed = `[[def: ${fileNameWithoutExt}, ${fileNameWithoutExtNoDash}]]\n` + outputTermContentProcessed;
                 }
 
                 // Conversion to Spec-Up-T: Ensure a newline after the '## See ' pattern
-                fileContent = ensureNewlineAfterPattern(fileContent)
+                outputTermContentProcessed = ensureNewlineAfterPattern(outputTermContentProcessed)
 
-                // Conversion to Spec-Up-T: Remove everything after the second heading
-                fileContent = removeEverythingAfterSecondHeading(fileContent);
+                // // Conversion to Spec-Up-T: Remove everything after the second heading
+                // sourceFileContent = removeEverythingAfterSecondHeading(sourceFileContent);
 
                 // Conversion to Spec-Up-T: Replace internal markdown links with the Spec-Up-T reference format
-                fileContent = replaceInternalMarkdownLinks(fileContent)
+                outputTermContentProcessed = replaceInternalMarkdownLinks(outputTermContentProcessed)
 
                 // Conversion to Spec-Up-T: Remove markdown headings
-                fileContent = removeMarkdownHeadings(fileContent);
+                outputTermContentProcessed = removeMarkdownHeadings(outputTermContentProcessed);
 
                 // Add a line at the end of the file with a link to the KERI glossary
-                fileContent += `\nMore in <a href="https://weboftrust.github.io/WOT-terms/docs/glossary/${fileNameWithoutExt}">extended KERI glossary</a>`
+                outputTermContentProcessed += `\nMore in <a href="https://weboftrust.github.io/WOT-terms/docs/glossary/${fileNameWithoutExt}">extended KERI glossary</a>`
 
                 // Conversion to Spec-Up-T: Write the updated content to the new file
-                await appendFileAsync(termsDirPath, fileContent);
+                await appendFileAsync(termsDirPath, outputTermContentProcessed);
             } else {
                 console.log(`File not found in ToIP_Fkey: ${fileNameWithoutExt}`);
                 numberOfMissingMatches++;
             }
-
-
-
-
-
         } catch (err) {
-            console.error(`${filePath}`, err);
+            console.error(`${sourceFilePath}`, err);
         }
-    
     }
-
-
 
     (async () => {
         // Empty the terms directory
         await fs.emptyDir(termsDir);
 
         // Make a copy of the source files to a backup directory
-        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputMinusTermsDir}/archive/initialBackup`, false);
+        await makeCopyOfSourceFiles(sourceDirectoryPath, path.join(outputMinusTermsDir, 'archive', 'initialBackup'), false);
+
+        // Make a copy of the source files to a temp directory that will be the source for the latest directory
+        await makeCopyOfSourceFiles(sourceDirectoryPath, path.join(outputMinusTermsDir, 'temp'), false);
 
         // Make a copy of the source files to a new directory
-        await makeCopyOfSourceFiles(sourceDirectoryPath, `./${outputMinusTermsDir}/latest`, true);
+        // await makeCopyOfSourceFiles(sourceDirectoryPath, path.join(outputMinusTermsDir, 'latest'), true);
 
-        // // remove First Heading Until Second Heading And Write To New Source File for each file in the sourceFilesConverted directory
-        // await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, removeFirstHeadingUntilSecondHeadingAndWriteToNewSourceFile);
+        // await processFilesWithExtensionInDirectory(path.join(outputMinusTermsDir, 'latest'), fileExtension, createNewContentFromSource);
+        await processFilesWithExtensionInDirectory(path.join(outputMinusTermsDir, 'temp'), fileExtension, createNewContentFromSource);
 
-        // // Convert the files in the sourceFilesConverted directory
-        // await processFilesWithExtensionInDirectory(`./${outputDir}/latest`, fileExtension, convertFiles);
-
-        await processFilesWithExtensionInDirectory(`./${outputMinusTermsDir}/latest`, fileExtension, createNewContentFromSource);
-        
         // create a unix timestamp of the current date and time
         const timestamp = Math.floor(Date.now() / 1000);
-        await makeCopyOfSourceFiles(`./${outputMinusTermsDir}/latest`, `./${outputMinusTermsDir}/archive/${timestamp}`, false);
+        await makeCopyOfSourceFiles(path.join(outputMinusTermsDir, 'latest'), path.join(outputMinusTermsDir, 'archive', timestamp.toString()), false);
+
+        // Remove temp dir
+        fs.remove(path.join(outputMinusTermsDir, 'temp'), (err) => {
+            if (err) throw err;
+        });
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
-
-
-
 }
 
 
