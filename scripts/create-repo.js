@@ -1,5 +1,6 @@
 const readline = require('readline');
 const https = require('https');
+const { exec } = require('child_process');
 
 // Explanation text
 console.log(`
@@ -23,33 +24,49 @@ Note:
 // Function to ask for input securely (hides password/token)
 const askHiddenInput = (question) => {
     return new Promise((resolve) => {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout,
-        });
-
-        rl.question(question, (input) => {
-            readline.cursorTo(process.stdout, 0);
-            process.stdout.write('\n'); // Move to the next line to hide input
-            rl.close();
-            resolve(input);
-        });
-
         process.stdout.write(question);
         process.stdin.setRawMode(true);
-        process.stdin.resume();
+        let input = '';
+
         process.stdin.on('data', (char) => {
-            if (char.toString() === '\n' || char.toString() === '\r') {
+            char = char.toString();
+
+            if (char === '\n' || char === '\r') {
                 process.stdin.setRawMode(false);
                 process.stdin.pause();
+                process.stdout.write('\n');
+                resolve(input);
+            } else {
+                input += char;
+                process.stdout.write('*');
             }
         });
+
+        process.stdin.resume();
     });
 };
+
 
 // Function to determine if the input is a PAT or a password
 const isPAT = (input) => {
     return input.startsWith('ghp_') && input.length === 40;
+};
+
+// Function to execute Git commands with better error handling
+const runGitCommand = (command, successMessage) => {
+    return new Promise((resolve, reject) => {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`❌ Error executing command: "${command}"`);
+                console.error(`⚠️ ${stderr.trim()}`);
+                console.log('💡 Tip: Make sure Git is installed and configured correctly.');
+                reject(error);
+            } else {
+                console.log(`✅ ${successMessage}`);
+                resolve(stdout);
+            }
+        });
+    });
 };
 
 // Main function
@@ -87,14 +104,31 @@ const isPAT = (input) => {
                     private: false,
                 });
 
-                const req = https.request(options, (res) => {
+                const req = https.request(options, async (res) => {
                     res.on('data', (d) => {
                         process.stdout.write(d);
                     });
+
+                    if (res.statusCode === 201) {
+                        console.log('\n✅ Repository created successfully on GitHub!\n');
+
+                        // Run Git commands with better error handling
+                        try {
+                            await runGitCommand('git init', 'Initialized a new Git repository locally.');
+                            await runGitCommand(`git remote add origin https://github.com/${username}/${repoName}.git`, 'Set the remote URL.');
+                            await runGitCommand('git branch -M main', 'Renamed the branch to "main".');
+                            await runGitCommand('git push -u origin main', 'Pushed the initial commit to GitHub.');
+                        } catch (error) {
+                            console.error('❌ An error occurred while running Git commands.');
+                        }
+                    } else {
+                        console.error('\n❌ Failed to create the repository on GitHub.');
+                    }
                 });
 
                 req.on('error', (error) => {
-                    console.error(error);
+                    console.error(`❌ HTTPS Request Error: ${error.message}`);
+                    console.log('💡 Tip: Check your internet connection or GitHub API token.');
                 });
 
                 req.write(data);
