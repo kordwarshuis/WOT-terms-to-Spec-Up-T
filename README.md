@@ -24,7 +24,7 @@ The input is:
 
 - a source directory
 
-The output is:
+The output is (in your Spec-Up-T installation):
 
 - new files in the directory `/spec/terms-definitions/` (or another location if you deliberately set it that way)
 - a directory called “sourceFilesConverted
