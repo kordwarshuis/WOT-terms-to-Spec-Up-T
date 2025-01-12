@@ -119,18 +119,6 @@ The conversion takes the source files, grabs the first paragraph (the definition
 npm run convert
 ```
 
-### Render the specification
-
-All the info is there now; only a result file (the `index.html`) needs to be created.
-
-You will run the render option by starting the menu:
-
-```bash
-npm run menu
-```
-
-You will see several menu entries. Choose option 1 (render).
-
 There should be an `index.html` in the `docs/` directory. This is the specification that can be viewed. One way to view it is to double click on it to open it in a browser.
 
 ## Results
