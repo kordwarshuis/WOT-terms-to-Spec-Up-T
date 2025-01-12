@@ -66,8 +66,9 @@ npm install wottermstospecupt
 Add two entries to your `scripts` section in `package.json` (the order of the entries doesn't matter, put it anywhere you like):
 
 ```json
+"fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
 "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
-"fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\""
+"create-repo": "node -e \"import('wottermstospecupt/scripts/create-repo.mjs')\""
 ```
 
 This should be the endresult:
@@ -180,6 +181,17 @@ This is the file to be hosted on your GitHub Pages, or somewhere else on a domai
 ### `/sourceFilesConverted/latest`
 
 These files are the modified files from your original source (for example a GitHub Wiki). You can move these to the original source.
+
+## Publishing to GitHub
+
+To get this repo on GitHub you can use the following command:
+
+```bash
+npm run create-repo
+```
+
+You will first be shown information and then given the chance to enter your data.
+
 
 ## Troubeshooting
 
