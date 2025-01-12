@@ -9,6 +9,8 @@ import readline from 'readline';
 import { config } from 'dotenv';
 config();
 
+import specUpT from 'spec-up-t';
+
 let sourceDirectoryPath = '';
 
 // This script should be run from the root of the project, let's check if we are in the right directory
@@ -314,6 +316,13 @@ function main() {
         fs.remove(path.join(outputMinusTermsDir, 'temp'), (err) => {
             if (err) throw err;
         });
+
+        // Run Spec-Up-T render so that the new files are included in the output and we have an index.html file.
+        if (typeof specUpT === 'function') {
+            specUpT({ nowatch: true });
+        } else {
+            console.error('specUpT is not defined or is not a function.');
+        }
 
         console.log(`**************\n\nHouston, we have ${numberOfMissingMatches} problems\n\n**************`);
     })();
