@@ -27,8 +27,6 @@ if (!isRoot) {
 
 showLinkToDocumentation();
 
-const readline = require('readline');
-
 (async () => {
     // Check if the output directory exists
     const outputExists = await testIfOutputPathExists();
