@@ -194,7 +194,7 @@ You will first be shown information and then given the chance to enter your data
 
 ## How to go on from here
 
-Je hebt nu een lokale repo die naar GitHub geplaatst is met gegenereerde content.
+You now have a local repo posted to GitHub with generated content.
 
 When customizing content, you should do the following:
 
