@@ -74,11 +74,16 @@ This should be the endresult:
 ```json
 "scripts": {
     // ... other scripts ...
-    "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
     "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
+    "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
+    "create-repo": "node -e \"import('wottermstospecupt/scripts/create-repo.js')\""
     // ... other scripts ...
   }
 ```
+
+> **Warning**
+> Make sure that there is a comma at the end of each entry, except for the last one
+
 
 ### Run `render`
 
