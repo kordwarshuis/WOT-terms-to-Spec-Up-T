@@ -27,12 +27,13 @@ if (!isRoot) {
 
 showLinkToDocumentation();
 
+const readline = require('readline');
+
 (async () => {
     // Check if the output directory exists
     const outputExists = await testIfOutputPathExists();
 
     if (!outputExists) {
-        // Run Spec-Up-T render so that the new files are included in the output and we have an index.html file.
         if (typeof specUpT === 'function') {
             await new Promise((resolve, reject) => {
                 try {
@@ -48,18 +49,26 @@ showLinkToDocumentation();
         }
     }
 
+    // Prompt the user for input after the async tasks are done
+    promptForSourceDirectoryPath();
+})();
+
+function promptForSourceDirectoryPath() {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     });
 
-    rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (input) => {
-        sourceDirectoryPath = input;
-        // console.log(`Source Directory Path: ${sourceDirectoryPath}`);
-        rl.close();
-        main();
-    });
-})();
+    rl.question(
+        '\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):',
+        (input) => {
+            sourceDirectoryPath = input;
+            rl.close();
+            main();
+        }
+    );
+}
+
 
 
 function main() {
