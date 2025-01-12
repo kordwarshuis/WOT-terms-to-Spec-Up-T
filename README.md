@@ -192,6 +192,23 @@ npm run create-repo
 
 You will first be shown information and then given the chance to enter your data.
 
+## How to go on from here
+
+Je hebt nu een lokale repo die naar GitHub geplaatst is met gegenereerde content.
+
+When customizing content, you should do the following:
+
+```bash
+npm run menu
+```
+
+You will see several menu entries. Choose option 1 (render).
+
+The `index.html` will be recreated. To get the changes online use the `git push` command:
+
+```bash
+git push
+```
 
 ## Troubeshooting
 
