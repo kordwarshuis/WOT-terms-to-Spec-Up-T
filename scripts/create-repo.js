@@ -127,10 +127,20 @@ const runGitCommand = (command, successMessage) => {
 
                         // Run Git commands with better error handling
                         try {
-                            await runGitCommand('git init', 'Initialized a new Git repository locally.');
+                            // await runGitCommand('git init', 'Initialized a new Git repository locally.');
+                            // Add all files to the staging area
+                            execSync('git add .');
+                            console.log('\n✅ Added all files to the staging area.');
+
+                            // Commit the files
+                            execSync('git commit -m "Initial commit"');
+                            console.log('\n✅ Committed the files.');
                             await runGitCommand(`git remote add origin https://github.com/${username}/${repoName}.git`, 'Set the remote URL.');
+                            console.log('\n✅ Set the remote URL to the new repository on GitHub.');
                             await runGitCommand('git branch -M main', 'Renamed the branch to "main".');
+                            console.log('\n✅ Renamed the branch to "main".');
                             await runGitCommand('git push -u origin main', 'Pushed the initial commit to GitHub.');
+                            console.log('\n✅ Pushed the initial commit to the main branch on GitHub.');
                         } catch (error) {
                             console.error('❌ An error occurred while running Git commands.');
                         }
