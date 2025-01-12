@@ -2,14 +2,18 @@ import { readFileSync, appendFile, existsSync } from 'fs';
 import { promisify } from 'util';
 import path, { join } from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
-import processFilesWithExtensionInDirectory from "./modules/processFilesWithExtensionInDirectory.mjs";
-import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
-import { showLinkToDocumentation } from './modules/showLinkToDocumentation.mjs';
 import readline from 'readline';
 import { config } from 'dotenv';
 config();
+import processFilesWithExtensionInDirectory from "./modules/processFilesWithExtensionInDirectory.mjs";
+import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
+import { showLinkToDocumentation } from './modules/showLinkToDocumentation.mjs';
+import testIfOutputPathExists from './modules/testIfOutputPathExists.mjs';
 
-import specUpT from 'spec-up-t';
+
+
+// import specUpT from 'spec-up-t';
+import specUpT from '/Users/kor/webdev/Blockchain-Bird/KERI/Spec-Up/active/spec-up-t/spec-up-t/index.js';
 
 let sourceDirectoryPath = '';
 
@@ -23,18 +27,31 @@ if (!isRoot) {
 
 showLinkToDocumentation();
 
+(async () => {
+    // Check if the output directory exists
+    const outputExists = await testIfOutputPathExists();
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+    if (!outputExists) {
+        // Run Spec-Up-T render so that the new files are included in the output and we have an index.html file.
+        if (typeof specUpT === 'function') {
+            specUpT({ nowatch: true });
+        } else {
+            console.error('specUpT is not defined or is not a function.');
+        }
+    }
 
-rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (input) => {
-    sourceDirectoryPath = input;
-    // console.log(`Source Directory Path: ${sourceDirectoryPath}`);
-    rl.close();
-    main();
-});
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (input) => {
+        sourceDirectoryPath = input;
+        // console.log(`Source Directory Path: ${sourceDirectoryPath}`);
+        rl.close();
+        main();
+    });
+})();
 
 
 function main() {
