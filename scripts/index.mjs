@@ -2,13 +2,12 @@ import { readFileSync, appendFile, existsSync } from 'fs';
 import { promisify } from 'util';
 import path, { join } from 'path';
 import fs from 'fs-extra'; // Assuming you are using fs-extra for readJsonSync
-import readline from 'readline';
-import { config } from 'dotenv';
-config();
 import processFilesWithExtensionInDirectory from "./modules/processFilesWithExtensionInDirectory.mjs";
 import makeCopyOfSourceFiles from "./modules/makeCopyOfSourceFiles.mjs";
 import { showLinkToDocumentation } from './modules/showLinkToDocumentation.mjs';
-import testIfOutputPathExists from './modules/testIfOutputPathExists.mjs';
+import readline from 'readline';
+import { config } from 'dotenv';
+config();
 
 import specUpT from 'spec-up-t';
 
@@ -24,46 +23,18 @@ if (!isRoot) {
 
 showLinkToDocumentation();
 
-(async () => {
-    // Check if the output directory exists
-    const outputExists = await testIfOutputPathExists();
 
-    if (!outputExists) {
-        if (typeof specUpT === 'function') {
-            await new Promise((resolve, reject) => {
-                try {
-                    specUpT({ nowatch: true });
-                    resolve();
-                } catch (error) {
-                    reject(error);
-                }
-            });
-        } else {
-            console.error('specUpT is not defined or is not a function.');
-            return;
-        }
-    }
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-    // Prompt the user for input after the async tasks are done
-    promptForSourceDirectoryPath();
-})();
-
-function promptForSourceDirectoryPath() {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    rl.question(
-        '\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):',
-        (input) => {
-            sourceDirectoryPath = input;
-            rl.close();
-            main();
-        }
-    );
-}
-
+rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (input) => {
+    sourceDirectoryPath = input;
+    // console.log(`Source Directory Path: ${sourceDirectoryPath}`);
+    rl.close();
+    main();
+});
 
 
 function main() {
