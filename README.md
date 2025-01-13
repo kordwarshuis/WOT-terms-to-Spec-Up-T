@@ -32,7 +32,21 @@ The output is (in your Spec-Up-T installation):
 
 ## How to use: detailed
 
+## Install `Spec-Up-T`
+
+Make sure you are in the directory where you want to install Spec-Up-T. A new subdirectory will be created with your chosen name, and the Spec-Up-T files will be placed in this subdirectory.
+
+```bash
+npx create-spec-up-t my-spec-up-t-website
+```
+
+*my-spec-up-t-website* can be anything you want it to be, that will your chosen name (however, it is recommended to not use spaces or special characters in directory names).
+
+After running this command you should have a Spec-Up-T installation. Follow the directions in your Command Line window.
+
 ### Add info to `.env`
+
+Depending on your preferences, you can edit the files through the Command Line or through an editor such as VS Code.
 
 To import meta data from an external source (in this case the Google Sheet containing meta data), add this code snippet below locally to the `.env` file (or create from the `.env.example`) of the target repo for your glossary to be, supposing you had already created this repo.
 
@@ -54,7 +68,7 @@ Replace “*****” with a valid Google Sheet Key (ask someone who has gone thro
 
 ### Install `wottermstospecupt`
 
-To be able to convert your own terminology into a Spec-Up-T valid terminology, install the  conversion package in the root of your target repo:
+To be able to convert your own terminology into a Spec-Up-T valid terminology, install the  conversion package. Make sure you are in the root of your target repo:
 
 ```bash
 npm install wottermstospecupt
@@ -62,7 +76,7 @@ npm install wottermstospecupt
 
 ### Add entries to `scripts` in `package.json`
 
-Add two entries to your `scripts` section in `package.json` (the order of the entries doesn't matter, put it anywhere you like):
+Add three entries to your `scripts` section in `package.json` (the order of the entries doesn't matter, put it anywhere you like):
 
 ```json
 "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
