@@ -2,8 +2,9 @@
 
 ## General info
 
-This is a tool to convert WOT terms to Spec-Up-T
-More generic: This is a tool that ...
+This is a tool to convert WOT terms to Spec-Up-T.
+
+In the future, this tool will be made more generic so that it is generally useful for importing pre-existing specifications into Spec-Up-t.
 
 This script uses Spec-Up-T, see [documentation about Spec-Up-T](https://trustoverip.github.io/spec-up-t-website/).
 
