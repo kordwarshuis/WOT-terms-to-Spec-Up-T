@@ -187,11 +187,25 @@ npm run create-repo
 
 You will first be shown information and then given the chance to enter your data.
 
+Then, after entering the last piece of info (namely your password or token), the code will be pushed to GitHub.
+
+Let's visit the GitHub repo:
+
+```bash
+git remote -v
+```
+
+You will see two URLs. To view the remote repo, use one of them (it doesn't matter which one). Copy the URL and paste it into your browser, or use another method you know.
+
 ## How to go on from here
 
-You now have a local repo posted to GitHub with generated content.
+You now have a local repo on your computer and a remote “mirror” posted to GitHub.
 
-When customizing content, you should do the following:
+When adding or rewriting content, do the following:
+
+Add your text to the specification files in `spec/terms-definitions` (this is the default place; if you specified the directory's name earlier, go to that location).
+
+Then start the menu:
 
 ```bash
 npm run menu
@@ -199,7 +213,9 @@ npm run menu
 
 You will see several menu entries. Choose option 1 (render).
 
-The `index.html` will be recreated. To get the changes online use the `git push` command:
+The `index.html` will be recreated.
+
+To get the changes online use the `git push` command:
 
 ```bash
 git push
