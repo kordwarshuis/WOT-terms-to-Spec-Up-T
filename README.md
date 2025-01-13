@@ -127,7 +127,7 @@ There should be an `index.html` in the `docs/` directory. This is the specificat
 
 ## Results
 
-If everything went as planned, you should now have the following (after running a few times):
+If everything went as planned, you should now have the following (the number of sub directories in the `archive` directory depends on how often you ran the convert command.):
 
 ```bash
 docs
