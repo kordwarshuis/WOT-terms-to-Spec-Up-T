@@ -85,17 +85,6 @@ This should be the endresult:
 > Make sure that there is a comma at the end of each entry, except for the last one
 
 
-### Run `render`
-
-Run the render option at least once (This step is still necessary now but will disappear in the future).
-
-You will run the render option by starting the menu:
-  
-```bash
-npm run menu
-```
-
-You will see several menu entries. Choose option 1 (render).
 
 ### Fetch meta info
 
