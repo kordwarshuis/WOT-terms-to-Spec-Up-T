@@ -41,7 +41,15 @@ function main() {
 
     /* CONFIG */
     const fileExtension = '.md';
-    const config = fs.readJsonSync('./output/specs-generated.json');
+
+    let config;
+    // if the render function has already been run, use the generated specs file, if not use the original specs file
+    if (fs.existsSync('./output/specs-generated.json')) {
+        config = fs.readJsonSync('./output/specs-generated.json');
+    } else {
+        config = fs.readJsonSync('./specs.json');
+    }
+
     const termsDir = path.join(config.specs[0].spec_directory, config.specs[0].spec_terms_directory);
     const outputMinusTermsDir = process.env.WOTTERMSTOSPECUPT_OUTPUT_DIR;
     const metadataJsonLocation = `./${outputMinusTermsDir}/metadata.json`;
