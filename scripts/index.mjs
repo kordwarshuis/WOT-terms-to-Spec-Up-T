@@ -301,6 +301,12 @@ function main() {
     }
 
     (async () => {
+        // Ensure the latest directory exists
+        const latestDir = path.join(outputMinusTermsDir, 'latest');
+        if (!fs.existsSync(latestDir)) {
+            await fs.mkdir(latestDir, { recursive: true });
+        }
+
         // Empty the terms directory
         await fs.emptyDir(termsDir);
 
@@ -310,8 +316,9 @@ function main() {
         // Make a copy of the source files to a temp directory that will be the source for the latest directory
         await makeCopyOfSourceFiles(sourceDirectoryPath, path.join(outputMinusTermsDir, 'temp'), false);
 
-        // Make a copy of the source files to a new directory
-        // await makeCopyOfSourceFiles(sourceDirectoryPath, path.join(outputMinusTermsDir, 'latest'), true);
+        // Make a copy of the source files to the latest directory
+        await makeCopyOfSourceFiles(path.join(outputMinusTermsDir, 'temp'), latestDir, true);
+
 
         // await processFilesWithExtensionInDirectory(path.join(outputMinusTermsDir, 'latest'), fileExtension, createNewContentFromSource);
         await processFilesWithExtensionInDirectory(path.join(outputMinusTermsDir, 'temp'), fileExtension, createNewContentFromSource);
