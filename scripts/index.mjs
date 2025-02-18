@@ -12,6 +12,7 @@ config();
 import specUpT from 'spec-up-t';
 
 let sourceDirectoryPath = '';
+let termsType = '';
 
 // This script should be run from the root of the project, let's check if we are in the right directory
 const isRoot = existsSync(join(process.cwd(), 'package.json'));
@@ -29,16 +30,28 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (input) => {
-    sourceDirectoryPath = input;
+// rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (input) => {
+//     sourceDirectoryPath = input;
+//     // console.log(`Source Directory Path: ${sourceDirectoryPath}`);
+//     rl.close();
+//     main();
+// });
+
+
+rl.question('\n\n\n********************\n\nPlease enter the path to the source directory files.\n\nThis can be a relative path (to this repo) or absolute\n(starting from the root of your file system)\n\nWARNING: This will remove your existing terms first.\n\n********************\n\nPLEASE ENTER PATH (no quotes around it):', (sourceDirectoryPathInput) => {
+    sourceDirectoryPath = sourceDirectoryPathInput;
     // console.log(`Source Directory Path: ${sourceDirectoryPath}`);
-    rl.close();
-    main();
+
+    rl.question('\n\n\n********************\n\nWhat “type” you want to process?\n\n(Please enter “K”, “G” or “S” (without the quotes)).\n\n', (termsTypeInput) => {
+        termsType = termsTypeInput;
+        rl.close();
+        main();
+    });
 });
 
 
-function main() {
 
+function main() {
     /* CONFIG */
     const fileExtension = '.md';
 
@@ -67,9 +80,26 @@ function main() {
     const indexOfAlias = objMetadata[0].indexOf('Alias'.trim());
     const indexOfTerm = objMetadata[0].indexOf('Term'.trim());
     const indexOfType = objMetadata[0].indexOf('Type'.trim());
-    
+
     let allToIP_FkeyValues = [];
     let numberOfMissingMatches = 0;
+
+
+    // Check the value of termsType and assign a new value
+    switch (termsType.toLowerCase()) {
+        case 'k':
+            termsType = 'k'; //KERI
+            break;
+        case 'g':
+            termsType = 'g'; // General
+            break;
+        case 's':
+            termsType = 's'; // SSI
+            break;
+        default:
+            termsType = 'a';// All
+    }
+
 
     objMetadata.forEach((row, index) => {
         if (index > 0) {
@@ -98,6 +128,7 @@ function main() {
 
         return aliasValue;
     }
+
     function findTermInObjMetadata(fName) {
         let term = '';
 
@@ -113,6 +144,23 @@ function main() {
         });
 
         return term;
+    }
+
+    function findTypeInObjMetadata(fName) {
+        let type = '';
+
+        // Iterate over each row in objMetadata, will not stop until the end of the array. forEach is not designed to be stoppable. It always iterates through all elements in the array.
+        objMetadata.forEach((row, index) => {
+            // Skip the header row
+            if (index > 0) {
+                // Check if the ToIP_Fkey column matches fName
+                if (row[indexOfToIP_Fkey] === fName) {
+                    type = row[indexOfType];
+                }
+            }
+        });
+
+        return type;
     }
 
     function replaceInternalMarkdownLinks(fileContent) {
@@ -251,6 +299,10 @@ function main() {
                         console.log('File created/updated successfully at:', latestFilePath);
                     });
                 });
+
+                if (findTypeInObjMetadata(fileNameWithoutExt).toLowerCase() !== termsType.toLowerCase()) { 
+                    return;
+                }
 
                 // 2 of 2: Write outputTermContent to the terms directory
                 let outputTermContentProcessed = outputTermContent;
