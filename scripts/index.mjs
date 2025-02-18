@@ -66,6 +66,8 @@ function main() {
     const indexOfToIP_Fkey = objMetadata[0].indexOf('ToIP_Fkey');
     const indexOfAlias = objMetadata[0].indexOf('Alias');
     const indexOfTerm = objMetadata[0].indexOf('Term');
+    const indexOfType = objMetadata[0].indexOf('Type');
+    
     let allToIP_FkeyValues = [];
     let numberOfMissingMatches = 0;
 
