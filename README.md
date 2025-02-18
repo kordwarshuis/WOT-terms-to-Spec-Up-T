@@ -19,11 +19,13 @@ Requirements:
 
 ## How to use: overview
 
+Find step by step instructions under “How to use: detailed”.
+
 This script has an input part and an output part.
 
 The input is:
 
-- a source directory
+- a source directory (in this case the Wiki files)
 
 The output is (in your Spec-Up-T installation):
 
@@ -123,7 +125,9 @@ The conversion takes the source files, grabs the first paragraph (the definition
 npm run convert
 ```
 
-There should be an `index.html` in the `docs/` directory. This is the specification that can be viewed. One way to view it is to double click on it to open it in a browser.
+You will be asked to enter a path to the source files. This can be a relative or an absolute path.
+
+After pressing ENTER a script should run and after finishing there should be an `index.html` in the `docs/` directory. This is the specification that can be viewed. One way to view it is to double click on it to open it in a browser.
 
 ## Results
 
