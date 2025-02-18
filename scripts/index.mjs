@@ -63,11 +63,10 @@ function main() {
 
     const appendFileAsync = promisify(appendFile);
     const objMetadata = JSON.parse(jsonMetadata).values;
-    const indexOfToIP_Fkey = objMetadata[0].indexOf('ToIP_Fkey');
-    const indexOfAlias = objMetadata[0].indexOf('Alias');
-    const indexOfTerm = objMetadata[0].indexOf('Term');
-    const indexOfType = objMetadata[0].indexOf('Type');
-    
+    const indexOfToIP_Fkey = objMetadata[0].indexOf('ToIP_Fkey'.trim());
+    const indexOfAlias = objMetadata[0].indexOf('Alias'.trim());
+    const indexOfTerm = objMetadata[0].indexOf('Term'.trim());
+    const indexOfType = objMetadata[0].indexOf('Type'.trim());    
     let allToIP_FkeyValues = [];
     let numberOfMissingMatches = 0;
 
