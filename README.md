@@ -93,7 +93,7 @@ This should be the endresult:
     // ... other scripts ...
     "fetch": "node -e \"import('wottermstospecupt/scripts/fetchGoogleSheetContent.mjs')\"",
     "convert": "node -e \"import('wottermstospecupt/scripts/index.mjs')\"",
-    "create-repo": "node -e \"import('wottermstospecupt/scripts/create-repo.js')\""
+    "create-repo": "node -e \"import('wottermstospecupt/scripts/create-repo.js')\"",
     // ... other scripts ...
   }
 ```
